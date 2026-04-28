@@ -199,7 +199,6 @@ body {
 
 .login {
   height: var(--tamanho-login);
-  background-image: url('../assets/img/bg-jelly-fish-para-home.png');
   background-size: cover;
 }
 
@@ -211,15 +210,19 @@ body {
 
 .card {
   width: 50%;
-  background-color: #e5e5e5;
+  background-color: gray;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: palevioletred;
+  color: white;
   flex-direction: column;
   height: fit-content;
   padding: 20px 0;
+}
+
+.card h2 {
+  color: black;
 }
 
 .card h2 {
@@ -241,14 +244,14 @@ body {
 }
 
 .formulario input {
-  border: 2px solid #32b9cd;
+  border: 2px solid #e5571d;
   text-align: center;
   border-radius: 10px;
   margin: 0;
 }
 
 .formulario select {
-  border: 2px solid #32b9cd;
+  border: 2px solid #e5571d;
   background-color: white;
   color: gray;
   height: 36px;
@@ -272,7 +275,7 @@ body {
   font-weight: 600;
   font-size: 18px;
   color: #fff;
-  background-color: #ED145B;
+  background-color: #e5571d;
   width: 120px;
   height: 30px;
   align-self: center;
@@ -307,7 +310,7 @@ body {
   width: 230px;
   position: fixed;
   border-radius: 4px;
-  border: #ED145B 3px solid;
+  border: #e5571d 3px solid;
   padding: 10px;
   margin-right: 10%;
 }
@@ -329,7 +332,7 @@ body {
 
 input {
   margin-bottom: 10px;
-  border: 2px solid #32b9cd;
+  border: 2px solid #e5571d;
   padding: 10px;
   text-align: center;
   border-radius: 10px;
@@ -343,7 +346,7 @@ input {
   font-size: 18px;
   padding: 10px 15px;
   color: white;
-  background-color: #ED145B;
+  background-color: #e5571d;
   width: 120px;
   align-self: center;
   margin-top: 5px;
