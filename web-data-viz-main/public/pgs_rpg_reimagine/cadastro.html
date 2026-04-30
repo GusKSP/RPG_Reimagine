@@ -34,18 +34,18 @@
         <div class="logo"></div>
       </div>
       <ul class="navbar">
-        <li>
-          <a href="../pgs_rpg_reimagine/index.html">Inicial</a>
-        </li>
-        <li>
+        <li class="agora">
           <a href="../pgs_rpg_reimagine/jogar.html">Jogar</a>
         </li>
-        <li>|</li>
         <li>
-          <a href="../pgs_rpg_reimagine/login.html">Login</a>
+          <div class="btn_navbar">
+            <a href="../pgs_rpg_reimagine/login.html">Login</a>
+          </div>
         </li>
         <li class="agora">
-          <a href="#">Cadastro</a>
+          <div class="btn_navbar">
+            <a href="#">Cadastro</a>
+          </div>
         </li>
       </ul>
     </div>
@@ -81,7 +81,7 @@
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
         <div id="div_aguardar" class="loading-div">
-          <img src="./assets/circle-loading.gif" id="loading-gif" />
+          <img src="../assets/imgs/circle-loading.gif" id="loading-gif" />
         </div>
 
         <div id="div_erros_login"></div>
@@ -100,14 +100,16 @@
 </body>
 
 </html>
+<script src="../js/sessao.js"></script>
+<script src="../js/alerta.js"></script>
 
 <script>
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
+  // Array para armazenar usuarios cadastrados para validação de código de ativação 
+  let listaUsuariosCadastrados = [];
 
   function cadastrar() {
-    // aguardar();
+    aguardar();
 
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
@@ -115,20 +117,18 @@
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var codigoVar = codigo_input.value;
-    var idEmpresaVincular
+    var idUsuarioVincular;
 
     // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      confirmacaoSenhaVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
+        "Campos em branco. Por favor, preencha todos os campos para realizar o cadastro!";
 
       finalizarAguardar();
       return false;
@@ -136,15 +136,15 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
+    // Verificando se o email é de algum usuário já cadastrado
+    for (let i = 0; i < listaUsuariosCadastrados.length; i++) {
+      if (listaUsuariosCadastrados[i].email == emailVar) {
+        idUsuarioVincular = listaUsuariosCadastrados[i].id
+        console.log("Email já cadastrado. Fazer login?");
         break;
       } else {
         cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+        mensagem_erro.innerHTML = "Email já cadastrado. Deseja fazer login?";
         finalizarAguardar();
       }
     }
@@ -161,7 +161,7 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        idEmpresaVincularServer: idEmpresaVincular
+        idUsuarioVincularServer: idUsuarioVincular
       }),
     })
       .then(function (resposta) {
@@ -199,10 +199,10 @@
       .then(function (resposta) {
         resposta.json().then((empresas) => {
           empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
+            listaUsuariosCadastrados.push(empresa);
 
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
+            console.log("listaUsuariosCadastrados")
+            console.log(listaUsuariosCadastrados[0].codigo_ativacao)
           });
         });
       })
