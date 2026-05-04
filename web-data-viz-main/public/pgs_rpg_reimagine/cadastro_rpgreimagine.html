@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Rpg_Reimagine | Cadastro</title>
+
+  <script src="../js/sessao.js"></script>
+
+  <link rel="stylesheet" href="/css/rpgreimagine/estilo.css">
+  <link rel="icon" href="../assets/icon/favicon2.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+  <!-- Mais fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body onload="listar()">
+  <div class="header">
+    <div class="container">
+      <div class="esquerda">
+        <div class="logo" onclick="location.href='index_rpgreimagine.html'"></div>
+      </div>
+      <ul class="navbar">
+        <li class="agora">
+          <a href="jogar_rpgreimagine.html">Jogar</a>
+        </li>
+        <li>
+          <div class="btn_navbar">
+            <a href="login_rpgreimagine.html">Login</a>
+          </div>
+        </li>
+        <li class="agora">
+          <div class="btn_navbar">
+            <a href="#">Cadastro</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="login">
+    <div class="alerta_erro">
+      <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card card-cadastro">
+        <h2>Cadastre-se</h2>
+        <div class="formulario">
+
+          <div class="campo">
+            <span>Nome:</span>
+            <input id="nome_input" type="text" placeholder="Nome de usuario" />
+          </div>
+          <div class="campo">
+            <span>E-mail:</span>
+            <input id="email_input" type="text" placeholder="usuario@gmail.com" />
+          </div>
+          <div class="campo">
+            <span>Senha:</span>
+            <input id="senha_input" type="password" placeholder="******" />
+          </div>
+          <div class="campo">
+            <span>Confirmar Senha:</span>
+            <input id="confirmacao_senha_input" type="password" placeholder="******" />
+          </div>
+          <button class="botao" onclick="validar()">Cadastrar</button>
+        </div>
+        <div id="div_aguardar" class="loading-div">
+          <img src="../assets/imgs/circle-loading.gif" id="loading-gif" />
+        </div>
+
+        <div id="div_erros_login"></div>
+      </div>
+    </div>
+  </div>
+
+  <!--footer inicio-->
+  <div class="footer">
+    <div class="container">
+      <h4>Feito por Gus Kenzo Shigeoka Paulino <span class="version">v1.0.0</span></h4>
+      <h4>SPTech &copy; 2023</h4>
+    </div>
+  </div>
+  <!--footer fim-->
+</body>
+
+</html>
+<script src="../js/sessao.js"></script>
+<script src="../js/alerta.js"></script>
+
+<script>
+
+  // Array para armazenar usuarios cadastrados para validação de código de ativação 
+  let listaUsuariosCadastrados = [];
+
+  function validar() {
+
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
+    var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var idUsuarioVincular;
+    // Verificando se há algum campo em branco
+    if (
+      nomeVar.trim() === "" ||
+      emailVar.trim() === "" ||
+      senhaVar.trim() === "" ||
+      confirmacaoSenhaVar.trim() === ""
+    ) {
+      mensagem_erro.innerHTML = "Campos em branco. Por favor, preencha todos os campos para realizar o cadastro!";
+      mostrarErro();
+
+      finalizarAguardar();
+      return false;
+    }
+
+    let nomeComTresCaracteres = true;
+    if (nomeVar.length < 3) {
+      mostrarErro();
+      mensagem_erro.innerHTML = "Nome inválido. O nome deve conter pelo menos 3 caracteres!";
+      nomeComTresCaracteres = false;
+      return false;
+    }
+    else {
+      console.log("Nome válido. Prosseguir com cadastro.");
+    }
+    let nomeLongo = false
+    if (nomeVar.length > 100) {
+      nomeLongo = true;
+      mostrarErro();
+      mensagem_erro.innerHTML = "Nome inválido. O nome deve conter no máximo 100 caracteres!";
+      nomeComTresCaracteres = false;
+      return false;
+    }
+    else {
+      console.log("Nome válido. Prosseguir com cadastro.");
+    }
+
+    // Verificando se o nome tem pelo menos 3 caracteres e contém apenas letras e espaços
+    let nomeSemCaracteresEspeciais = true;
+    const ListaCaracteresEspeciais = "!@#$%^&*()_+[]{}|;'\":,./<>?`~";
+    for (let i = 0; i < nomeVar.length; i++) {
+      if (ListaCaracteresEspeciais.includes(nomeVar[i])) {
+        nomeSemCaracteresEspeciais = false;
+        break;
+      }
+    }
+    if (!nomeSemCaracteresEspeciais) {
+      mensagem_erro.innerHTML = "Nome inválido. O nome não pode conter caracteres especiais!";
+      mostrarErro();
+    }
+
+    let emailSemEspacos = true;
+    if (emailVar.includes(" ")) {
+      mostrarErro();
+      mensagem_erro.innerHTML = "Email inválido. O email não pode conter espaços!";
+      emailSemEspacos = false;
+      return false;
+    }
+    else {
+      console.log("Email sem espaços. Prosseguir com cadastro.");
+    }
+
+
+
+    // Verificando se o email cadastrado tem um formato válido
+    // Constante que define a expressão regular (regex = regular expression) para validar o formato do email
+
+    let EmailValidar = false
+    const emailInvalido = emailVar => {
+      const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return !EmailRegex.test(emailVar);
+    }
+    if (emailInvalido(emailVar)) {
+      mensagem_erro.innerHTML = "Email inválido. Por favor, insira um email válido";
+      mostrarErro();
+      return false;
+    }
+    else {
+      console.log("Email válido. Prosseguir com cadastro.");
+      EmailValidar = true;
+    }
+
+    // Verificando se a senha tem pelo menos 6 caracteres
+    let senhaValida = true;
+    if (senhaVar.length < 6) {
+      mensagem_erro.innerHTML = "Senha inválida. A senha deve conter pelo menos 6 caracteres!";
+      mostrarErro();
+      senhaValida = false;
+      return false;
+    }
+    else {
+      senhaValida = true;
+      console.log("Senha válida. Prosseguir com cadastro.");
+    }
+
+    // Verificando se a senha e a confirmação de senha são iguais
+    let SenhasIguais = true
+    if (senhaVar != confirmacaoSenhaVar) {
+      mensagem_erro.innerHTML = "As senhas devem ser iguais no campo de senha e confirmar senha";
+      mostrarErro();
+      SenhasIguais = false;
+      return false;
+    }
+    else {
+      SenhasIguais = true;
+      console.log("Senhas iguais. Prosseguir com cadastro.");
+    }
+
+    // Verificando se o email é de algum usuário já cadastrado
+    var usuarioEncontrado = false;
+    for (let i = 0; i < listaUsuariosCadastrados.length; i++) {
+      if (listaUsuariosCadastrados[i].email == emailVar) {
+        usuarioEncontrado = true;
+        idUsuarioVincular = listaUsuariosCadastrados[i].id
+        console.log("Email já cadastrado. Fazer login?");
+        return false;
+      } else {
+        console.log("Email não encontrado. Prosseguir com cadastro.");
+      }
+    }
+    if (usuarioEncontrado) {
+      mensagem_erro.innerHTML = "Email já cadastrado. Deseja fazer login?";
+      mostrarErro();
+      return false;
+    }
+    // Enviando o valor da nova input
+
+    if (nomeSemCaracteresEspeciais && nomeComTresCaracteres && !nomeLongo && EmailValidar && emailSemEspacos && senhaValida && SenhasIguais && !usuarioEncontrado) {
+      console.log("Todos os campos são válidos. Prosseguir com cadastro.");
+
+
+      fetch("/usuariosRpg/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // crie um atributo que recebe o valor recuperado aqui
+          // Agora vá para o arquivo routes/usuario.js
+          nomeServer: nomeVar,
+          emailServer: emailVar,
+          senhaServer: senhaVar,
+          idUsuarioVincularServer: idUsuarioVincular
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+
+          if (resposta.ok) {
+            mostrarErro();
+
+            mensagem_erro.innerHTML =
+              "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+            setTimeout(() => {
+              window.location = "login.html";
+            }, "2000");
+
+            limparFormulario();
+            finalizarAguardar();
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+          finalizarAguardar();
+        });
+
+      return false;
+    }
+  }
+
+  // Listando usuarios cadastrados 
+  function listar() {
+    fetch("/usuariosRpg/listar", {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then((usuarios) => {
+          usuarios.forEach((usuario) => {
+            listaUsuariosCadastrados.push(usuario);
+
+            console.log("listaUsuariosCadastrados")
+            console.log(listaUsuariosCadastrados[0].email)
+          });
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+
+  function mostrarErro() {
+    cardErro.style.display = "block";
+    mensagem_erro.style.display = "block";
+    setTimeout(sumirMensagem, 5000);
+  }
+</script>
