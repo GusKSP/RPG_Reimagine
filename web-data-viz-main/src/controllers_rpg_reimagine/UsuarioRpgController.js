@@ -23,7 +23,6 @@ function cadastrarRpg(req, res) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return !regex.test(email);
     };
-
     // Validando Nome no BackEnd
     if (!nome || nome.trim() === "") {
         console.log("Nome inválido recebido:", nome);

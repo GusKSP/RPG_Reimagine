@@ -106,7 +106,7 @@
 <script>
 
   // Array para armazenar usuarios cadastrados para validação de código de ativação 
-  let listaUsuariosCadastrados = [];
+  let VerificarEmailCadastrado = "";
 
   function validar() {
 
@@ -227,19 +227,14 @@
     // Verificando se o email é de algum usuário já cadastrado
     var usuarioEncontrado = false;
     for (let i = 0; i < listaUsuariosCadastrados.length; i++) {
-      if (listaUsuariosCadastrados[i].email == emailVar) {
+      if (listaUsuariosCadastrados[i] == emailVar) {
         usuarioEncontrado = true;
-        idUsuarioVincular = listaUsuariosCadastrados[i].id
-        console.log("Email já cadastrado. Fazer login?");
+        mostrarErro();
+        mensagem_erro.innerHTML = "Email já cadastrado. Deseja fazer login?";
         return false;
       } else {
         console.log("Email não encontrado. Prosseguir com cadastro.");
       }
-    }
-    if (usuarioEncontrado) {
-      mensagem_erro.innerHTML = "Email já cadastrado. Deseja fazer login?";
-      mostrarErro();
-      return false;
     }
     // Enviando o valor da nova input
 
@@ -247,7 +242,7 @@
       console.log("Todos os campos são válidos. Prosseguir com cadastro.");
 
 
-      fetch("/usuariosRpg/cadastrar", {
+      fetch("/usuariosRpg/cadastrarRpg", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -271,7 +266,7 @@
               "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
             setTimeout(() => {
-              window.location = "login.html";
+              window.location = "login_rpgreimagine.html";
             }, "2000");
 
             limparFormulario();
@@ -289,9 +284,9 @@
     }
   }
 
-  // Listando usuarios cadastrados 
-  function listar() {
-    fetch("/usuariosRpg/listar", {
+  // Verificando se email inserido já existe no banco de dados 
+  function Verificar() {
+    fetch("/usuariosRpg/listarRpg", {
       method: "GET",
     })
       .then(function (resposta) {
@@ -300,7 +295,7 @@
             listaUsuariosCadastrados.push(usuario);
 
             console.log("listaUsuariosCadastrados")
-            console.log(listaUsuariosCadastrados[0].email)
+            console.log(listaUsuariosCadastrados)
           });
         });
       })

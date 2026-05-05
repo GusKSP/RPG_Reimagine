@@ -10,7 +10,7 @@ router.post("/cadastrarRpg", function (req, res) {
     UsuarioRpgController.cadastrarRpg(req, res);
 })
 
-//Recebendo os dados do html e direcionando para a função listar de usuarioController.js
+//Recebendo os dados do BD e direcionando para a função listar de usuarioController.js
 router.get("/listarRpg", function (req, res) {
     UsuarioRpgController.listarRpg(req, res);
 })
