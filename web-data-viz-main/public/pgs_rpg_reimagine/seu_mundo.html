@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG REIMAGINE | seu_mundo</title>
+</head>
+
+<style>
+    .horizontal {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .vertical {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .centralizar_linha {
+        align-items: center;
+    }
+
+    .centralizar_tudo {
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        height: fit-content;
+    }
+
+    select {
+        overflow: hidden;
+        -webkit-appearance: none;
+        padding: 3px;
+        border: solid black 1.5px;
+        border-radius: 3px
+    }
+
+    option {}
+</style>
+
+<body>
+    <div class="container">
+        <div class="horizontal centralizar_linha">
+            <div>
+                <p>imagem</p>
+            </div>
+            <h1>Seu mundo</h1>
+        </div>
+        <div>
+            <h3>descrição:</h3>
+            <div id="container">
+                <span id="texto" onclick="tornarInput()">Clique para editar</span>
+                <p contenteditable="true" oninput="Contar()" id="p_texto_editavel">Coloque aqui a descrição de seu
+                    mundo.</p>
+                <p id="contador_de_50"></p>
+            </div>
+        </div>
+        <div class="vertical">
+            <h3>Informações do personagem</h3>
+            <div class="div_Imagem">
+                <div class="horizontal centralizar_linha">
+                    <button>editar_nome</button>
+                    <div class="vertical centralizar_linha">
+                        <h4>imagem do personagem</h4>
+                        <p>imagem</p>
+                    </div>
+                    <button>editar_nome</button>
+                </div>
+            </div>
+            <div id="div_Vida">
+                <div class="horizontal">
+                    <button>editar_nome</button>
+                    <label id="acompanhar_vida_max">100</label><label>/</label><label contenteditable="true"
+                        oninput="SetarVida()" id="label_vida_padrao">100</label>
+                    <button>excluir</button><br>
+                </div>
+            </div>
+            <div id="div_Stamina">
+                <div class="horizontal centralizar_linha">
+                    <button>editar_nome</button>
+                    <div class="vertical">
+                        <h4>Stamina</h4>
+                        <div id="barra_de_stamina">
+                            <label id="acompanhar_stamina_max">100</label><label>/</label><label contenteditable="true"
+                                oninput="SetarStamina()" id="label_stamina_padrao">100</label>
+                        </div>
+                    </div>
+                    <button>excluir</button>
+                </div>
+            </div>
+        </div>
+        <div name=" AddElement">
+            <select name="" id="elemento" onchange="AdicionarElemento()">
+                <option value="0" hidden>+Adicionar elemento</option>
+                <option value="1">Espécie</option>
+                <option value="2">Classe</option>
+                <option value="3">Atributo</option>
+                <option value="4">Perícia</option>
+                <option value="5">Vida</option>
+                <option value="6">Stamina</option>
+                <option value="7">Imagem</option>
+                <option value="8">Item</option>
+                <option value="9">Mascote</option>
+                <option value="10">Montaria</option>
+                <option value="11">Original</option>
+            </select>
+        </div>
+    </div>
+</body>
+<script>
+    let limite = 50
+    function Contar() {
+        var texto_editavel = p_texto_editavel.textContent
+        console.log(texto_editavel)
+        if (texto_editavel.length >= limite - 10 && texto_editavel.length < limite) {
+            contador_de_50.innerHTML = texto_editavel.length
+        }
+        else if (texto_editavel.length >= limite) {
+            contador_de_50.innerHTML = "50+ seu texto chegou ao tamanho máximo"
+        }
+    }
+    function SetarVida() {
+        var vida_padrao = label_vida_padrao.textContent
+        console.log("vida setada para: " + vida_padrao)
+        acompanhar_vida_max.innerHTML = vida_padrao
+    }
+    function SetarStamina() {
+        var stamina_padrao = label_stamina_padrao.textContent
+        console.log("stamina setada para: " + stamina_padrao)
+        acompanhar_stamina_max.innerHTML = stamina_padrao
+    }
+</script>
+
+</html>
