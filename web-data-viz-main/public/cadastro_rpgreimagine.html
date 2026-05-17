@@ -27,11 +27,11 @@
     rel="stylesheet">
 </head>
 
-<body onload="listar()">
+<body>
   <div class="header">
     <div class="container">
       <div class="esquerda">
-        <div class="logo" onclick="location.href='index_rpgreimagine.html'"></div>
+        <div class="logo" onclick="location.href='index .html'"></div>
       </div>
       <ul class="navbar">
         <li class="agora">
@@ -184,18 +184,32 @@
     // Constante que define a expressão regular (regex = regular expression) para validar o formato do email
 
     let EmailValidar = false
-    const emailInvalido = emailVar => {
-      const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return !EmailRegex.test(emailVar);
-    }
-    if (emailInvalido(emailVar)) {
-      mensagem_erro.innerHTML = "Email inválido. Por favor, insira um email válido";
+    let EmailArroba = emailVar.split('@')
+    let EmailInvalido = true
+    if (EmailArroba[0] == "" || EmailArroba[1] == "" || EmailArroba[1].length < 7 || EmailArroba.length > 2) {
+      console.log("Primeira parte do Email Incorreta")
       mostrarErro();
+      mensagem_erro.innerHTML = "Email Inválido"
       return false;
     }
     else {
-      console.log("Email válido. Prosseguir com cadastro.");
-      EmailValidar = true;
+      let EmailPonto = EmailArroba[1].split('.')
+      if (EmailPonto[0] == "" || EmailPonto[0].length < 3) {
+        console.log("Segunda parte do Email Incorreta")
+        mostrarErro();
+        mensagem_erro.innerHTML = "Email Inválido"
+        return false;
+      }
+      else if (EmailPonto[1] == "" || EmailPonto[1].length < 3) {
+        console.log("Terceira parte do Email Incorreta")
+        mostrarErro();
+        mensagem_erro.innerHTML = "Email Inválido"
+        return false;
+      }
+      else {
+        EmailInvalido = false
+        console.log("Email válido. Prosseguir com cadastro.")
+      }
     }
 
     // Verificando se a senha tem pelo menos 6 caracteres

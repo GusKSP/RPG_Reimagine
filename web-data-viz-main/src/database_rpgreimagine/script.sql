@@ -2,7 +2,8 @@ USE Rpg_Reimagine;
 
 CREATE TABLE Usuario (
 id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-nome VARCHAR(50) NOT NULL,
+imagem_usuario VARCHAR (255),
+nome VARCHAR(100) NOT NULL,
 email VARCHAR(254) NOT NULL UNIQUE,
 senha VARCHAR (100) NOT NULL,
 dt_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -12,7 +13,8 @@ ativo TINYINT NOT NULL DEFAULT 1
 
 CREATE TABLE Mesas (
 id_mesa INT AUTO_INCREMENT PRIMARY KEY,
-nome_mesa VARCHAR(50) NOT NULL,
+imagem_mesa VARCHAR (255),
+nome_mesa VARCHAR(100) NOT NULL,
 dt_criacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 mesa_ativa TINYINT NOT NULL DEFAULT 1,
 codigo CHAR(16),
@@ -22,16 +24,10 @@ CONSTRAINT cfk_mesa_criador FOREIGN KEY (fk_usuario_criador) REFERENCES Usuario 
 
 CREATE TABLE Personagens (
 id_personagem INT PRIMARY KEY AUTO_INCREMENT,
-nome VARCHAR(50) NOT NULL,
+imagem_personagem VARCHAR (255),
+nome VARCHAR(100) NOT NULL,
 dt_criacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 descricao VARCHAR(500),
-vida_max INT,
-vida_atual INT,
-nivel INT,
-xp INT,
-especie VARCHAR(100),
-classe VARCHAR(100),
-patente VARCHAR(100),
 fk_usuario INT NOT NULL,
 CONSTRAINT cfk_usuario_personagem FOREIGN KEY (fk_usuario) REFERENCES Usuario(id_usuario)
 );
@@ -55,65 +51,36 @@ CONSTRAINT cfkpk_idpersonagem FOREIGN KEY (fkpk_idpersonagem) REFERENCES Persona
 
 CREATE TABLE ElementosMesa(
 id_elementos_mesa INT AUTO_INCREMENT PRIMARY KEY,
+imagem_elemento VARCHAR (255),
 nome VARCHAR(100) NOT NULL,
-descricao VARCHAR(500),
-valor_max_inteiro INT,
-valor_max_flutuante FLOAT,
+descricao VARCHAR(1000),
+simbolo VARCHAR(2),
+valor_inteiro INT,
+valor_flutuante FLOAT,
 tipo_elemento INT,
-fk_mesa_elemento INT NOT NULL,
-CONSTRAINT cfk_mesa_elemento FOREIGN KEY (fk_mesa_elemento) REFERENCES Mesas (id_mesa) ON DELETE CASCADE
+fk_mesa INT NOT NULL,
+CONSTRAINT cfk_mesa_elemento FOREIGN KEY (fk_mesa) REFERENCES Mesas (id_mesa),
+fk_elemento_dependencia INT,
+CONSTRAINT cfk_elemento_dependencia FOREIGN KEY (fk_elemento_dependencia) REFERENCES ElementosMesa(id_elementos_mesa),
+fk_elemento_multiplicador INT,
+CONSTRAINT cfk_elemento_multiplicador FOREIGN KEY (fk_elemento_multiplicador) REFERENCES ElementosMesa(id_elementos_mesa),
+fk_elemento_aditivo INT,
+CONSTRAINT cfk_elemento_aditivo FOREIGN KEY (fk_elemento_aditivo) REFERENCES ElementosMesa(id_elementos_mesa)
 );
 
 CREATE TABLE ElementosPersonagem (
 fkpk_idpersonagem INT NOT NULL,
 fkpk_idelemento INT,
 PRIMARY KEY (fkpk_idpersonagem,fkpk_idelemento),
-CONSTRAINT cfk_personagem FOREIGN KEY (fkpk_idpersonagem) REFERENCES Personagens(id_personagem) ON DELETE CASCADE,
-CONSTRAINT cfk_elemento FOREIGN KEY (fkpk_idelemento) REFERENCES ElementosMesa (id_elementos_mesa) ON DELETE CASCADE,
+CONSTRAINT cfk_personagem FOREIGN KEY (fkpk_idpersonagem) REFERENCES Personagens(id_personagem),
+CONSTRAINT cfk_elemento FOREIGN KEY (fkpk_idelemento) REFERENCES ElementosMesa (id_elementos_mesa),
 valor_atual_inteiro INT,
 Quantidade INT,
-valor_atual_flutuante FLOAT
+valor_atual_flutuante FLOAT,
+valor_atual_texto VARCHAR(1000)
 );
 
 SHOW TABLES;
-
-SELECT * FROM Campanha;
-SELECT * FROM ElementosMesa;
-SELECT * FROM ElementosPersonagem;
-SELECT * FROM Mesas;
-SELECT * FROM Personagens;
-SELECT * FROM Usuario;
-
-INSERT INTO Usuario (nome, email, senha) VALUES
-('admin','admin@email.com','rpg_reimagine_123');
-
-INSERT INTO Mesas (nome_mesa, fk_usuario_criador) VALUES
-('Mesa Teste', 1);
-
-INSERT INTO Personagens (nome, fk_usuario) VALUES
-('Personagem1',1),
-('Personagem2',1);
-
-INSERT INTO ElementosMesa (nome,fk_mesa_elemento,valor_max_inteiro,valor_max_flutuante) VALUES
-('Espada', 1, 20,null),
-('Escudo', 1, null, 31.55),
-('Bolsa de moedas Simples',1 ,null, 999.99);
-
-INSERT INTO CampanhaPersonagens (fkpk_idmesa,fkpk_idpersonagem) VALUES
-(1,1),
-(1,2);
-
-INSERT INTO CampanhaJogadores (fkpk_idmesa,fkpk_idusuario) VALUES
-(1,1);
-
-INSERT INTO ElementosPersonagem (fkpk_idpersonagem,fkpk_idelemento) VALUES
-(1,1),
-(1,3);
-
-INSERT INTO ElementosPersonagem (fkpk_idpersonagem, fkpk_idelemento, Quantidade) VALUES
-(1,1,1),
-(1,2,1),
-(1,3,3);
 
 
 -- Vendo os Usuarios Criadores de Cada Mesa
@@ -201,13 +168,10 @@ FROM Usuario AS u
 JOIN Mesas AS m
 JOIN CampanhaJogadores AS cp ON cp.fkpk_idusuario = u.id_usuario AND cp.fkpk_idmesa = m.id_mesa;
 
--- SELECIONANDO AS INFORMAÇÕES DE TODOS OS USUÁRIOS
-
-SELECT
+-- SELECIONANDO TODOS OS USUÁRIOS CADASTRADOS
+SELECT 
 u.id_usuario AS 'id_usuario',
 u.nome AS 'usuario_nome',
-u.email AS 'email_usuario',
-u.dt_registro AS 'data_registro',
-u.super_usuario AS 'super_usuario',
-u.ativo AS 'ativo'
+u.email AS 'usuario_email',
+u.dt_registro AS 'usuario_dt_registro'
 FROM Usuario AS u;
