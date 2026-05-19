@@ -105,10 +105,9 @@
 
 <script>
 
-  // Array para armazenar usuarios cadastrados para validação de código de ativação 
-  let VerificarEmailCadastrado = "";
 
   function validar() {
+
 
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
@@ -127,9 +126,47 @@
       mensagem_erro.innerHTML = "Campos em branco. Por favor, preencha todos os campos para realizar o cadastro!";
       mostrarErro();
 
-      finalizarAguardar();
+      //finalizarAguardar();
       return false;
     }
+    //Verificando se email sendo cadastrado já existe no Banco de Dados
+
+    fetch("/usuariosRpg/emailRegistrado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        emailServer: emailVar
+      })
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          console.log(resposta);
+          resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            if (json.length > 0) {
+              mostrarErro()
+              mensagem_erro.textContent = "Email já cadastrado, deseja fazer "
+              mensagem_erro.innerHTML += "<a href='login_rpgreimagine.html'>Login?</a>"
+              console.log("Email já cadastrado");
+              return false
+            } else {
+              console.log("Email ainda não cadastrado");
+            }
+          });
+        } else {
+          console.log("Houve um erro ao verificar o email!");
+          resposta.text().then(texto => {
+            console.error(texto);
+            return false
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
 
     let nomeComTresCaracteres = true;
     if (nomeVar.length < 3) {
@@ -207,7 +244,7 @@
         return false;
       }
       else {
-        EmailInvalido = false
+        EmailValidar = true
         console.log("Email válido. Prosseguir com cadastro.")
       }
     }
@@ -238,23 +275,10 @@
       console.log("Senhas iguais. Prosseguir com cadastro.");
     }
 
-    // Verificando se o email é de algum usuário já cadastrado
-    var usuarioEncontrado = false;
-    for (let i = 0; i < listaUsuariosCadastrados.length; i++) {
-      if (listaUsuariosCadastrados[i] == emailVar) {
-        usuarioEncontrado = true;
-        mostrarErro();
-        mensagem_erro.innerHTML = "Email já cadastrado. Deseja fazer login?";
-        return false;
-      } else {
-        console.log("Email não encontrado. Prosseguir com cadastro.");
-      }
-    }
     // Enviando o valor da nova input
 
-    if (nomeSemCaracteresEspeciais && nomeComTresCaracteres && !nomeLongo && EmailValidar && emailSemEspacos && senhaValida && SenhasIguais && !usuarioEncontrado) {
+    if (nomeSemCaracteresEspeciais && nomeComTresCaracteres && !nomeLongo && EmailValidar && emailSemEspacos && senhaValida && SenhasIguais) {
       console.log("Todos os campos são válidos. Prosseguir com cadastro.");
-
 
       fetch("/usuariosRpg/cadastrarRpg", {
         method: "POST",
@@ -284,40 +308,19 @@
             }, "2000");
 
             limparFormulario();
-            finalizarAguardar();
+            //finalizarAguardar();
           } else {
             throw "Houve um erro ao tentar realizar o cadastro!";
           }
         })
         .catch(function (resposta) {
           console.log(`#ERRO: ${resposta}`);
-          finalizarAguardar();
+          //finalizarAguardar();
         });
 
       return false;
     }
   }
-
-  // Verificando se email inserido já existe no banco de dados 
-  function Verificar() {
-    fetch("/usuariosRpg/listarRpg", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((usuarios) => {
-          usuarios.forEach((usuario) => {
-            listaUsuariosCadastrados.push(usuario);
-
-            console.log("listaUsuariosCadastrados")
-            console.log(listaUsuariosCadastrados)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
-
   function sumirMensagem() {
     cardErro.style.display = "none";
   }

@@ -13,16 +13,16 @@ function cadastrarRpg(nome, email, senha) {
 
 
 // Listando todos os emails de usuarios cadastrados
-function listarRpg() {
+function verificarEmail(email) {
     console.log("ACESSEI O USUARIORPG MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarRpg()");
     var instrucaoSelectUser = `            
-    SELECT u.email FROM Usuario u;
-`
+    SELECT u.email FROM Usuario u
+    WHERE u.email = (?);`;
     console.log("Executando a instrução SQL: \n" + instrucaoSelectUser);
-    return database.executar(instrucaoSelectUser);
+    return database.executar(instrucaoSelectUser, [email]);
 }
 
 module.exports = {
     cadastrarRpg,
-    listarRpg
+    verificarEmail
 };

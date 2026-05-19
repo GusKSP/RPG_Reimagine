@@ -2,15 +2,23 @@ console.log("CONTROLLER USUARIOS RPG CARREGADO");
 
 var UsuarioRpgModel = require("../models_rpg_reimagine/UsuarioRpgModel");
 
-function listarRpg(req, res) {
-    UsuarioRpgModel.listarRpg()
-        .then(function (usuarios) {
-            res.json(usuarios);
+function EmailRegistrado(req, res) {
+    var email = req.body.emailServer;
+
+    console.log("EMAIL RECEBIDO:", email);
+    UsuarioRpgModel.verificarEmail(email)
+        .then(function (resultado) {
+
+            res.json(resultado);
+
         })
         .catch(function (erro) {
+
             console.log(erro);
             res.status(500).json(erro.sqlMessage);
+
         });
+
 }
 
 function cadastrarRpg(req, res) {
@@ -93,5 +101,5 @@ function cadastrarRpg(req, res) {
 
 module.exports = {
     cadastrarRpg,
-    listarRpg
+    EmailRegistrado
 }
