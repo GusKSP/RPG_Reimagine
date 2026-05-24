@@ -5,131 +5,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPG REIMAGINE | seu_mundo</title>
+    <link rel="stylesheet" href="css/rpgreimagine/SeuMundo.css">
 </head>
-
-<style>
-    .horizontal {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .vertical {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .centralizar_linha {
-        align-items: center;
-    }
-
-    .centralizar_tudo {
-        justify-content: center;
-        align-items: center;
-    }
-
-    button {
-        height: fit-content;
-    }
-
-    select {
-        overflow: hidden;
-        -webkit-appearance: none;
-        padding: 3px;
-        border: solid black 1.5px;
-        border-radius: 3px
-    }
-
-    option {}
-</style>
 
 <body>
     <div class="container">
+        <img src="" alt="">
         <div class="horizontal centralizar_linha">
-            <div>
-                <img src="" alt="">
+            <div class="vertical centralizar_linha">
+                <div class="WImage">
+                    <img src="./assets/imgs_rpgreimagine/World_IMG_example.png" alt="Imagem_Do_Mundo">
+                </div>
+                <label for="WDropImage" class="WDropImageButton">Alterar Imagem</label>
+                <input type="file" id="WDropImage" accept="image/png, image/jpeg" multiple>
             </div>
-            <h1>Seu mundo</h1>
+            <input type="text" value="Seu Mundo" id="" class="WName">
         </div>
-        <div>
+        <div class="mundo">
             <h3>descrição:</h3>
-            <div id="container">
-                <span id="texto" onclick="tornarInput()">Clique para editar</span>
-                <p contenteditable="true" oninput="Contar()" id="p_texto_editavel">Coloque aqui a descrição de seu
-                    mundo.</p>
-                <p id="contador_de_50"></p>
+            <div id="container" class="descricao">
+                <textarea id="" value="" placeholder="Coloque a descrição de seu mundo"></textarea>
             </div>
         </div>
         <div class="vertical">
             <h3>Informações do personagem</h3>
             <div class="div_Imagem">
-                <div class="horizontal centralizar_linha">
-                    <button>editar_nome</button>
-                    <div class="vertical centralizar_linha">
-                        <h4>imagem do personagem</h4>
-                        <p>imagem</p>
+                <div class="vertical">
+                    <div class="horizontal centralizar_linha">
+                        <label for="imgCharacter" class="fakeButton">
+                            <img src="./assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
+                                onmouseover="this.src='./assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
+                                onmouseout="this.src='./assets/imgs_rpgreimagine/edit_text_No_Mouse.png'"
+                                alt="editar nome">
+                        </label>
+                        <div class="vertical centralizar_linha">
+                            <h4>imagem</h4>
+                            <input type="text" name="" id="imgCharacter">
+                            <div class="personagem_img"><img src="./assets/imgs_rpgreimagine/User_IMG_Exemple.png"
+                                    alt="imagem_do_personagem"></div>
+                        </div>
+                        <label class="fakeButton">
+                            <img src="./assets/imgs_rpgreimagine/Trash_No_Mouse.png"
+                                onmouseover="this.src='./assets/imgs_rpgreimagine/Trash_OutMouse.png'"
+                                onmouseout="this.src='./assets/imgs_rpgreimagine/Trash_No_Mouse.png'" alt="editar nome">
+                        </label>
+                        <h3>Nome do Personagem</h3>
                     </div>
-                    <button>excluir</button>
+                    <textarea name="descricao" placeholder="Descriçao do Personagem" readonly></textarea>
                 </div>
             </div>
 
-            <div id="areaElementos">
+            <div id="areaElementosPersonagem">
             </div>
         </div>
 
-        <div id="Características de Personagem">
-            <div class="vertical">
-                <div class="horizontal centralizar_linha">
-                    <h4>Característica</h4>
-                    <button>editar_nome</button>
-                </div>
-                <div class="horizontal">
-                    <input type="text">
-                </div>
-            </div>
-            <button>excluir</button>
-        </div>
-        <div name=" AddElement">
-            <select name="" id="elemento" onchange="AdicionarElemento()">
-                <option value="0" hidden>+Adicionar elemento</option>
-                <option value="1">Características de Personagem</option>
-                <option value="2">Barras de Personagem</option>
-                <option value="3">Atributos</option>
-                <option value="4">Perícias</option>
-                <option value="5">Skills</option>
-                <option value="6">Item</option>
-                <option value="7">Criatura</option>
-                <option value="8">Dado</option>
-                <option value="9">Único</option>
-            </select>
-        </div>
+    </div>
+    <div name=" AddElement">
+        <select name="" id="elemento" onchange="AdicionarElemento()">
+            <option value="0" hidden>+Adicionar elemento</option>
+            <option value="1">Características de Personagem</option>
+            <option value="2">Barras de Personagem</option>
+            <option value="3">Atributos</option>
+            <option value="4">Perícias</option>
+            <option value="5">Skills</option>
+            <option value="6">Item</option>
+            <option value="7">Criatura</option>
+            <option value="8">Dado</option>
+            <option value="9">Único</option>
+        </select>
+    </div>
     </div>
 </body>
 <script>
-    let limite = 50
-    function Contar() {
-        var texto_editavel = p_texto_editavel.textContent
-        console.log(texto_editavel)
-        if (texto_editavel.length >= limite - 10 && texto_editavel.length < limite) {
-            contador_de_50.innerHTML = texto_editavel.length
-        }
-        else if (texto_editavel.length >= limite) {
-            contador_de_50.innerHTML = "50+ seu texto chegou ao tamanho máximo"
-        }
-    }
-
+    let contadorCaracteristicas = 0;
     let contadorBarras = 0;
-
     function AdicionarElemento() {
 
         let select = document.getElementById("elemento");
         let valor = select.value;
 
-        // adiciona uma barra de stamina
+        if (valor == "1") {
+            contadorCaracteristicas++
+            areaElementosPersonagem.innerHTML += `
+        <div id="Características de Personagem" class="CharAtribute">
+            <div class="vertical">
+                <div class="TitleCaracterísticaPersonagem">
+                    <div class="horizontal centralizar_linha">
+                        <h4>Característica</h4>
+                        <input type="text" id="Caracteristica_${contadorCaracteristicas}">
+
+                        <!-- Função OnMouseOver e OnMouseOut do StackOverflow -->
+                        <label for="Caracteristica_${contadorCaracteristicas}" class="fakeButton">
+                            <img src="./assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
+                                onmouseover="this.src='./assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
+                                onmouseout="this.src='./assets/imgs_rpgreimagine/edit_text_No_Mouse.png'"
+                                alt="editar nome">
+                        </label>
+                    </div>
+                </div>
+                <div class="vertical">
+                    <div class="horizontal">
+                        <input type="text" placeholder="Nome da Característica">
+                        <label class="fakeButton">
+                            <img src="./assets/imgs_rpgreimagine/Trash_No_Mouse.png"
+                                onmouseover="this.src='./assets/imgs_rpgreimagine/Trash_OutMouse.png'"
+                                onmouseout="this.src='./assets/imgs_rpgreimagine/Trash_No_Mouse.png'" alt="editar nome">
+                        </label>
+                    </div>
+                </div>
+                <button>+Nova característica</button>
+            </div>`
+        }
+
         if (valor == "2") {
 
             contadorBarras++;
 
-            document.getElementById("areaElementos").innerHTML += `
+            areaElementosPersonagem.innerHTML += `
 
         <div class="div_Barra">
 
@@ -163,7 +155,12 @@
 
                 </div>
 
-                <button>excluir</button>
+                
+                <label class="fakeButton">
+                    <img src="./assets/imgs_rpgreimagine/Trash_No_Mouse.png"
+                        onmouseover="this.src='./assets/imgs_rpgreimagine/Trash_OutMouse.png'"
+                        onmouseout="this.src='./assets/imgs_rpgreimagine/Trash_No_Mouse.png'" alt="editar nome">
+                </label>
 
             </div>
 

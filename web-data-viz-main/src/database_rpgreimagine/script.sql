@@ -3,9 +3,9 @@ USE Rpg_Reimagine;
 CREATE TABLE Usuario (
 id_usuario INT AUTO_INCREMENT PRIMARY KEY,
 imagem_usuario VARCHAR (255),
-nome VARCHAR(100) NOT NULL,
-email VARCHAR(254) NOT NULL UNIQUE,
-senha VARCHAR (100) NOT NULL,
+nome VARCHAR(500) NOT NULL,
+email VARCHAR(320) NOT NULL UNIQUE,
+senha VARCHAR (4096) NOT NULL,
 dt_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 super_usuario TINYINT NOT NULL DEFAULT 0,
 ativo TINYINT NOT NULL DEFAULT 1
@@ -53,8 +53,8 @@ CREATE TABLE ElementosMesa(
 id_elementos_mesa INT AUTO_INCREMENT PRIMARY KEY,
 imagem_elemento VARCHAR (255),
 nome VARCHAR(100) NOT NULL,
-descricao VARCHAR(1000),
-simbolo VARCHAR(2),
+descricao TEXT,
+simbolo VARCHAR(255),
 valor_inteiro INT,
 valor_flutuante FLOAT,
 tipo_elemento INT,
@@ -109,7 +109,7 @@ FROM Usuario u
 JOIN Usuario uc
 JOIN Mesas m ON m.fk_usuario_criador = uc.id_usuario
 JOIN Personagens p ON p.fk_usuario = u.id_usuario
-JOIN ElementosMesa e ON e.fk_mesa_elemento = m.id_mesa
+JOIN ElementosMesa e ON e.id_elementos_mesa = m.id_mesa
 JOIN CampanhaJogadores cj ON cj.fkpk_idusuario = u.id_usuario AND cj.fkpk_idmesa = m.id_mesa
 JOIN ElementosPersonagem ep ON ep.fkpk_idpersonagem = p.id_personagem AND ep.fkpk_idelemento = e.id_elementos_mesa
 JOIN CampanhaPersonagens cp ON cp.fkpk_idmesa = m.id_mesa AND cp.fkpk_idpersonagem = p.id_personagem
@@ -117,7 +117,6 @@ ORDER BY p.id_personagem;
 
 -- SELECIONANDO APENAS OS PERSONAGENS E SUAS RESPECTIVAS MESAS
 
-CREATE VIEW Personagem_Mesa AS
 SELECT
 p.id_personagem AS 'ID Personagem',
 p.nome AS 'Nome_Personagem',
@@ -132,7 +131,6 @@ SELECT * FROM Personagem_Mesa;
 
 -- SELECIONANDO OS ELEMENTOS VINCULADOS A CADA PERSONAGEM
 
-CREATE VIEW Personagem_elementos AS
 SELECT
 p.id_personagem AS 'id_personagem',
 p.nome AS 'nome_personagem',
@@ -149,12 +147,11 @@ SELECT * FROM Personagem_elementos;
 
 -- SELECIONANDO OS ELEMENTOS EXISTENTES EM UMA MESA
 
-CREATE VIEW Elementos_Mesa_View AS
 SELECT 
 e.nome AS 'Elemento',
 m.nome_mesa AS 'Nome_Mesa'
 FROM Mesas AS m
-JOIN ElementosMesa AS e ON e.fk_mesa_elemento = m.id_mesa;
+JOIN ElementosMesa AS e ON e.id_elementos_mesa = m.id_mesa;
 
 SELECT * FROM Elementos_Mesa_View;
 
@@ -169,9 +166,12 @@ JOIN Mesas AS m
 JOIN CampanhaJogadores AS cp ON cp.fkpk_idusuario = u.id_usuario AND cp.fkpk_idmesa = m.id_mesa;
 
 -- SELECIONANDO TODOS OS USUÁRIOS CADASTRADOS
+
 SELECT 
 u.id_usuario AS 'id_usuario',
 u.nome AS 'usuario_nome',
 u.email AS 'usuario_email',
 u.dt_registro AS 'usuario_dt_registro'
-FROM Usuario AS u;
+FROM Usuario AS u 
+WHERE u.id_usuario > 0
+LIMIT 100;

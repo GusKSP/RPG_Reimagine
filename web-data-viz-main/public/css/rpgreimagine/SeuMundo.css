@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0%;
+    margin: 0%;
+    border: 0%;
+    background-color: transparent;
+    border-color: transparent;
+    color: white;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "Raleway", sans-serif;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.centralizar_linha {
+    align-items: center;
+}
+
+.centralizar_tudo {
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    height: fit-content;
+}
+
+select {
+    overflow: hidden;
+    -webkit-appearance: none;
+    padding: 3px;
+    border: solid black 1.5px;
+    border-radius: 3px
+}
+
+.descricao textarea {
+    width: 70%;
+    resize: none;
+    field-sizing: content;
+}
+
+select option {
+    background-color: black
+}
+
+::-webkit-input-placeholder {
+    color: white;
+    font: 12px verdana, arial, sans-serif;
+}
+
+.fakeButton img {
+    width: 1.5rem;
+}
+
+.fakeButton:hover {
+    cursor: pointer;
+}
+
+.WName {
+    font-size: xx-large;
+    font-weight: 700;
+}
+
+.personagem_img img {
+    width: 80px;
+    height: 80px;
+}
+
+.personagem_img {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    border: whitesmoke 1.5px solid;
+    justify-content: center;
+    align-content: center;
+}
+
+.WImage img {
+    width: 80px;
+    height: 80px;
+}
+
+.WImage {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    border: whitesmoke 1.5px solid;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.WDropImageButton {
+    margin: 0.3rem;
+    padding: 0.1rem;
+    font-size: small;
+    border: 1.3px white solid;
+}
+
+.WDropImageButton:hover {
+    cursor: pointer;
+    color: #c38dc2;
+    border-color: #c38dc2;
+}
+
+input {
+    width: auto;
+    field-sizing: content;
+}
+
+.CharAtribute {
+    display: flex;
+    justify-content: start;
+}
+
+.CharAtribute button {
+    border: 1px whitesmoke solid;
+}
+
+.CharAtribute button:hover {
+    cursor: pointer;
+    color: #c38dc2;
+    border-color: #c38dc2;
+}

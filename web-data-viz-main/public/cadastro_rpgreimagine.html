@@ -31,7 +31,8 @@
   <div class="header">
     <div class="container">
       <div class="esquerda">
-        <div class="logo" onclick="location.href='index .html'"></div>
+        <div class="logo" onclick="location.href='index .html'">
+        </div>
       </div>
       <ul class="navbar">
         <li class="agora">
@@ -111,12 +112,13 @@
 
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
-    var nomeVar = nome_input.value;
-    var emailVar = email_input.value;
-    var senhaVar = senha_input.value;
-    var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var idUsuarioVincular;
+    let nomeVar = nome_input.value;
+    let emailVar = email_input.value;
+    let senhaVar = senha_input.value;
+    let confirmacaoSenhaVar = confirmacao_senha_input.value;
+    let idUsuarioVincular;
     // Verificando se há algum campo em branco
+    emailVar = emailVar.toLowerCase();
     if (
       nomeVar.trim() === "" ||
       emailVar.trim() === "" ||
@@ -179,10 +181,10 @@
       console.log("Nome válido. Prosseguir com cadastro.");
     }
     let nomeLongo = false
-    if (nomeVar.length > 100) {
+    if (nomeVar.length > 500) {
       nomeLongo = true;
       mostrarErro();
-      mensagem_erro.innerHTML = "Nome inválido. O nome deve conter no máximo 100 caracteres!";
+      mensagem_erro.innerHTML = "Nome inválido. O nome deve conter no máximo 500 caracteres!";
       nomeComTresCaracteres = false;
       return false;
     }
@@ -202,6 +204,7 @@
     if (!nomeSemCaracteresEspeciais) {
       mensagem_erro.innerHTML = "Nome inválido. O nome não pode conter caracteres especiais!";
       mostrarErro();
+      return false;
     }
 
     let emailSemEspacos = true;
@@ -223,6 +226,21 @@
     let EmailValidar = false
     let EmailArroba = emailVar.split('@')
     let EmailInvalido = true
+    let EmailLongo = false
+    console.log(EmailArroba)
+    if(emailVar.length > 320){
+
+      console.log("Email deve muito longo")
+      mostrarErro();
+      mensagem_erro.innerHTML = "Email muito grande!"
+      return false;
+    }
+    if(!emailVar.includes("@") || !emailVar.includes(".")){
+      console.log("Email deve conter @ e .")
+      mostrarErro();
+      mensagem_erro.innerHTML = "Email deve conter um arroba"
+      return false;
+    }
     if (EmailArroba[0] == "" || EmailArroba[1] == "" || EmailArroba[1].length < 7 || EmailArroba.length > 2) {
       console.log("Primeira parte do Email Incorreta")
       mostrarErro();
@@ -252,10 +270,17 @@
     // Verificando se a senha tem pelo menos 6 caracteres
     let senhaValida = true;
     if (senhaVar.length < 6) {
-      mensagem_erro.innerHTML = "Senha inválida. A senha deve conter pelo menos 6 caracteres!";
       mostrarErro();
+      mensagem_erro.innerHTML = "Senha inválida. A senha deve conter pelo menos 6 caracteres!";
       senhaValida = false;
       return false;
+    }
+
+    if (senhaVar.length > 4096){
+      mostrarErro();
+      mensagem_erro.innerHTML = "Senha inválida. A senha no máximo 4096 caracteres!";
+      senhaValida = false;
+
     }
     else {
       senhaValida = true;
@@ -277,7 +302,7 @@
 
     // Enviando o valor da nova input
 
-    if (nomeSemCaracteresEspeciais && nomeComTresCaracteres && !nomeLongo && EmailValidar && emailSemEspacos && senhaValida && SenhasIguais) {
+    if (nomeSemCaracteresEspeciais && nomeComTresCaracteres && !nomeLongo && EmailValidar && emailSemEspacos && senhaValida && SenhasIguais && !EmailLongo) {
       console.log("Todos os campos são válidos. Prosseguir com cadastro.");
 
       fetch("/usuariosRpg/cadastrarRpg", {
