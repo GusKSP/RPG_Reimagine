@@ -14,4 +14,8 @@ router.post("/emailRegistrado", function (req, res) {
     UsuarioRpgController.EmailRegistrado(req, res);
 });
 
+router.post("/AutenticarRoute", function(req,res){
+    UsuarioRpgController.Autenticar(req,res);
+})
+
 module.exports = router;

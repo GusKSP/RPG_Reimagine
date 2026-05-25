@@ -118,7 +118,8 @@
     let confirmacaoSenhaVar = confirmacao_senha_input.value;
     let idUsuarioVincular;
     // Verificando se há algum campo em branco
-    emailVar = emailVar.toLowerCase();
+    nomeVar.trim();
+    emailVar = emailVar.trim().toLowerCase();
     if (
       nomeVar.trim() === "" ||
       emailVar.trim() === "" ||

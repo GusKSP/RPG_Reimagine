@@ -94,12 +94,35 @@ function cadastrarRpg(req, res) {
                 }
             ).catch(function (erro) {
                 console.log("ERRO COMPLETO:", erro);
-                res.status(500).json(erro.sqlMessage || erro.message || erro);
+                res.status(500).json(erro.sqlMessage );
             });
     }
 }
 
+
+function Autenticar(req, res){
+    var email = req.body.emailServer
+    var senha = req.body.senhaServer
+    UsuarioRpgModel.autenticarUsuario(email, senha).then(function(resultado){
+        if (resultado.length ==1){
+            console.log(resultado);
+            res.status(200).json(resultado);
+        }
+        else if(resultado.length == 0){
+            console.log(resultado)
+            res.status(403).send("email ou senha inválido")
+        }
+        else{
+            console.log(resultado)
+            res.status(405).send("mais de dois usuários com o mesmo email?")
+        }
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
 module.exports = {
     cadastrarRpg,
-    EmailRegistrado
+    EmailRegistrado,
+    Autenticar
 }

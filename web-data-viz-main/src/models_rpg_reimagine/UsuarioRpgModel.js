@@ -22,7 +22,18 @@ function verificarEmail(email) {
     return database.executar(instrucaoSelectUser, [email]);
 }
 
+function autenticarUsuario(email, senha) {
+    console.log("ACESSEI O USUARIORPG MODEL")
+
+
+    var instrucaoSelectUser = `SELECT u.id_usuario, u.email, u.nome u FROM Usuario u WHERE u.email= ? AND u.senha = ?`
+    console.log("Executando a instrução SQL: \n" + instrucaoSelectUser);
+    return database.executar(instrucaoSelectUser, [email, senha])
+}
+
+
 module.exports = {
     cadastrarRpg,
-    verificarEmail
+    verificarEmail,
+    autenticarUsuario
 };
