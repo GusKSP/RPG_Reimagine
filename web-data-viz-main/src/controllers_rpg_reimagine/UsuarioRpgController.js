@@ -79,44 +79,43 @@ function cadastrarRpg(req, res) {
         return res.status(400).send("Senha deve ter pelo menos 6 caracteres!");
     }
 
-    if (senha.length > 100) {
+    if (senha.length > 4096) {
         console.log("Senha inválida recebida:", senha);
         return res.status(400).send("Senha muito longa!");
     }
 
-    else {
 
-        // Passe os valores como parâmetro e vá para o arquivo UsuarioRpgModel.js
-        UsuarioRpgModel.cadastrarRpg(nome, email, senha)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(function (erro) {
-                console.log("ERRO COMPLETO:", erro);
-                res.status(500).json(erro.sqlMessage );
-            });
-    }
+    // Passe os valores como parâmetro e vá para o arquivo UsuarioRpgModel.js
+    UsuarioRpgModel.cadastrarRpg(nome, email, senha)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(function (erro) {
+            console.log("ERRO COMPLETO:", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
 }
 
 
-function Autenticar(req, res){
+
+function Autenticar(req, res) {
     var email = req.body.emailServer
     var senha = req.body.senhaServer
-    UsuarioRpgModel.autenticarUsuario(email, senha).then(function(resultado){
-        if (resultado.length ==1){
+    UsuarioRpgModel.autenticarUsuario(email, senha).then(function (resultado) {
+        if (resultado.length == 1) {
             console.log(resultado);
             res.status(200).json(resultado);
         }
-        else if(resultado.length == 0){
+        else if (resultado.length == 0) {
             console.log(resultado)
             res.status(403).send("email ou senha inválido")
         }
-        else{
+        else {
             console.log(resultado)
             res.status(405).send("mais de dois usuários com o mesmo email?")
         }
-    }).catch(function(erro){
+    }).catch(function (erro) {
         res.status(500).json(erro.sqlMessage)
     })
 }

@@ -10,7 +10,7 @@
 
   <script src="../js/sessao.js"></script>
 
-  <link rel="stylesheet" href="/css/rpgreimagine/estilo.css">
+  <link rel="stylesheet" href="./css/rpgreimagine/estilo.css">
   <link rel="icon" href="../assets/icon/favicon2.ico" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
 
@@ -31,13 +31,10 @@
   <div class="header">
     <div class="container">
       <div class="esquerda">
-        <div class="logo" onclick="location.href='index .html'">
+        <div class="logo" onclick="location.href='index.html'">
         </div>
       </div>
       <ul class="navbar">
-        <li class="agora">
-          <a href="jogar_rpgreimagine.html">Jogar</a>
-        </li>
         <li>
           <div class="btn_navbar">
             <a href="login_rpgreimagine.html">Login</a>
@@ -53,11 +50,6 @@
   </div>
 
   <div class="login">
-    <div class="alerta_erro">
-      <div class="card_erro" id="cardErro">
-        <span id="mensagem_erro"></span>
-      </div>
-    </div>
     <div class="container">
       <div class="card card-cadastro">
         <h2>Cadastre-se</h2>
@@ -85,19 +77,44 @@
           <img src="../assets/imgs/circle-loading.gif" id="loading-gif" />
         </div>
 
+        <div class="alerta_erro">
+        </div>
+
         <div id="div_erros_login"></div>
       </div>
     </div>
-  </div>
 
-  <!--footer inicio-->
-  <div class="footer">
-    <div class="container">
-      <h4>Feito por Gus Kenzo Shigeoka Paulino <span class="version">v1.0.0</span></h4>
-      <h4>SPTech &copy; 2023</h4>
+    <div class="card_erro" id="cardErro">
+      <span id="mensagem_erro"></span>
     </div>
   </div>
-  <!--footer fim-->
+
+  <div class="footer">
+    <div class="container">
+      <div class="esquerda">
+        <h4>Para jogar, Crie ou Entre em sua Conta!</h4>
+        <p>Já tem uma conta? faça seu
+          <a href="./login_rpgreimagine.html">Login!</a>
+        </p>
+
+
+        <p>Não tem uma conta? faça seu
+          <a href="./cadastro_rpgreimagine.html">Cadastro!</a>
+        </p>
+      </div>
+      <div class="meio">
+        <h4 onclick="window.location.href = 'index.html#Sobre'">Sobre o RpgReimagine</h4>
+      </div>
+      <div class="direita">
+        <div class="horizontal">
+          <img src="./assets/imgs_rpgreimagine/DICE_RPGREIMAGINE_PixelArt.png" alt="logo_rpg_reimagine">
+
+          <h4>Tem alguma Reclamação ou Dúvida?</h4>
+        </div>
+        <p>Email para contato: <a href="mailto:gus.paulino@sptech.school">gus.paulino@sptech.school</a></p>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
@@ -107,7 +124,7 @@
 <script>
 
 
-  function validar() {
+  async function validar() {
 
 
     //Recupere o valor da nova input pelo nome do id
@@ -229,14 +246,14 @@
     let EmailInvalido = true
     let EmailLongo = false
     console.log(EmailArroba)
-    if(emailVar.length > 320){
+    if (emailVar.length > 320) {
 
       console.log("Email deve muito longo")
       mostrarErro();
       mensagem_erro.innerHTML = "Email muito grande!"
       return false;
     }
-    if(!emailVar.includes("@") || !emailVar.includes(".")){
+    if (!emailVar.includes("@") || !emailVar.includes(".")) {
       console.log("Email deve conter @ e .")
       mostrarErro();
       mensagem_erro.innerHTML = "Email deve conter um arroba"
@@ -277,7 +294,7 @@
       return false;
     }
 
-    if (senhaVar.length > 4096){
+    if (senhaVar.length > 4096) {
       mostrarErro();
       mensagem_erro.innerHTML = "Senha inválida. A senha no máximo 4096 caracteres!";
       senhaValida = false;
@@ -354,6 +371,6 @@
   function mostrarErro() {
     cardErro.style.display = "block";
     mensagem_erro.style.display = "block";
-    setTimeout(sumirMensagem, 5000);
+    setTimeout(sumirMensagem, 1000);
   }
 </script>

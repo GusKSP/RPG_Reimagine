@@ -10,7 +10,7 @@
 
     <script src="../js/sessao.js"></script>
 
-    <link rel="stylesheet" href="/css/rpgreimagine/estilo.css">
+    <link rel="stylesheet" href="./css/rpgreimagine/estilo.css">
     <link rel="icon" href="../assets/icon/favicon2.ico">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
@@ -37,9 +37,6 @@
             </div>
             <ul class=" navbar">
                 <li class="agora">
-                    <a href="jogar_rpgreimagine.html">Jogar</a>
-                </li>
-                <li class="agora">
                     <div class="btn_navbar">
                         <a href="#">Login</a>
                     </div>
@@ -55,11 +52,6 @@
 
 
     <div class="login">
-        <div class="alerta_erro">
-            <div class="card_erro" id="cardErro">
-                <span id="mensagem_erro"></span>
-            </div>
-        </div>
         <div class="container">
             <div class="card card-login">
                 <h2>Faça seu Login</h2>
@@ -82,16 +74,40 @@
                 <div id="div_erros_login"></div>
             </div>
         </div>
-    </div>
 
-    <!--footer inicio-->
-    <div class="footer">
-        <div class="container">
-            <h4>Feito por Gus Kenzo Shigeoka Paulino <span class="version">v1.0.0</span></h4>
-            <h4>SPTech &copy; 2023</h4>
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
         </div>
     </div>
-    <!--footer fim-->
+
+    <div class="footer">
+        <div class="container">
+            <div class="esquerda">
+                <h4>Para jogar, Crie ou Entre em sua Conta!</h4>
+                <p>Já tem uma conta? faça seu
+                    <a href="./login_rpgreimagine.html">Login!</a>
+                </p>
+
+
+                <p>Não tem uma conta? faça seu
+                    <a href="./cadastro_rpgreimagine.html">Cadastro!</a>
+                </p>
+            </div>
+            <div class="meio">
+                <h4 onclick="window.location.href = 'index.html#Sobre' ">Sobre o RpgReimagine</h4>
+            </div>
+            <div class="direita">
+                <div class="horizontal">
+                    <img src="./assets/imgs_rpgreimagine/DICE_RPGREIMAGINE_PixelArt.png" alt="logo_rpg_reimagine">
+
+                    <h4>Tem alguma Reclamação ou Dúvida?</h4>
+                </div>
+                <p>Email para contato: <a href="mailto:gus.paulino@sptech.school">gus.paulino@sptech.school</a></p>
+            </div>
+        </div>
+    </div>
 
 </body>
 
@@ -99,7 +115,6 @@
 <script src="../js/sessao.js"></script>
 <script src="../js/alerta.js"></script>
 <script>
-
 
     function entrar() {
         //aguardar();
@@ -109,13 +124,10 @@
         let senhaVar = senha_input.value;
 
         if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
+            mostrarErro()
             mensagem_erro.innerHTML = "Preencha todos os campos!";
             finalizarAguardar();
             return false;
-        }
-        else {
-            setInterval(sumirMensagem, 1000)
         }
 
         console.log("FORM LOGIN: ", emailVar);
@@ -143,16 +155,19 @@
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id_usuario;
                     //sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    mostrarErro()
+                    mensagem_erro.innerHTML = "Login feito com sucesso! Redirecionando para a tela Jogar... "
 
                     setTimeout(function () {
                         window.location = "./seu_mundo.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 1000);
 
                 });
 
             }
             else {
-
+                mostrarErro()
+                mensagem_erro.innerHTML = "Houve um erro ao tentar realizar o login!"
                 console.log("Houve um erro ao tentar realizar o login!");
 
                 resposta.text().then(texto => {
@@ -172,4 +187,9 @@
         cardErro.style.display = "none"
     }
 
+    function mostrarErro() {
+        cardErro.style.display = "block";
+        mensagem_erro.style.display = "block";
+        setTimeout(sumirMensagem, 1000);
+    }
 </script>
