@@ -150,16 +150,20 @@
 
                 resposta.json().then(json => {
                     console.log(json);
+                    let usuario = json[0]
+                    console.log("Chaves disponíveis:", Object.keys(json))
                     console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id_usuario;
+                    sessionStorage.ID_USUARIO = usuario.id_usuario;
+                    sessionStorage.EMAIL_USUARIO = usuario.email;
+                    sessionStorage.IMG_USUARIO = usuario.imagem_usuario
+                    sessionStorage.NOME_USUARIO = usuario.nome;
+                    sessionStorage.SUPER_USER = usuario.super_usuario;
                     //sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
                     mostrarErro()
                     mensagem_erro.innerHTML = "Login feito com sucesso! Redirecionando para a tela Jogar... "
 
                     setTimeout(function () {
-                        window.location = "./seu_mundo.html";
+                        window.location = "./jogar_rpgreimagine.html";
                     }, 1000);
 
                 });

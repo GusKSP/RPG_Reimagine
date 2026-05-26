@@ -26,7 +26,7 @@ function autenticarUsuario(email, senha) {
     console.log("ACESSEI O USUARIORPG MODEL")
 
 
-    var instrucaoSelectUser = `SELECT u.id_usuario, u.email, u.nome u FROM Usuario u WHERE u.email= ? AND u.senha = ?`
+    var instrucaoSelectUser = `SELECT u.id_usuario, u.email, u.imagem_usuario, u.nome, u.super_usuario FROM Usuario u WHERE u.email= ? AND u.senha = ?`
     console.log("Executando a instrução SQL: \n" + instrucaoSelectUser);
     return database.executar(instrucaoSelectUser, [email, senha])
 }
