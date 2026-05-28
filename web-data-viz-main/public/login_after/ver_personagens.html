@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rpg_Reimagine | ver_personagens</title>
+
+
+    <link rel="stylesheet" href="../css/rpgreimagine/loginafter.css">
+    <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Mais fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="carregarPersonagens()">
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="esquerda">
+                    <div class="logo" onclick="window.location.href='../index.html'"></div>
+                </div>
+                <ul class="navbar">
+                    <li>
+                        <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_mundos.html">Ver Mundos</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_personagens.html">Ver Personagens</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_campanhas.html">Ver Campanhas</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_perfil.html">Ver Perfil</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <div id="Personagens">
+
+        </div>
+        <div>
+            <button class="Btn_criarPersonagem" onclick="window.location.href='criar_personagem.html'">+ Criar
+                Personagem</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="esquerda">
+                <div class="horizontal">
+                    <img src="../assets/imgs_rpgreimagine/DICE_RPGREIMAGINE_PixelArt.png" alt="logo_rpg_reimagine">
+
+                    <h4>Tem alguma Reclamação ou Dúvida?</h4>
+                </div>
+                <p>Email para contato: <a href="mailto:gus.paulino@sptech.school">gus.paulino@sptech.school</a></p>
+            </div>
+            <div class="meio">
+            </div>
+            <div class="direita">
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+<script>
+    async function carregarPersonagens() {
+        let id = sessionStorage.ID_USUARIO
+        console.log(id)
+        let respostas = await fetch("/personagemRpg/routeBuscarPersonagens", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServer: id
+            })
+
+        })
+        let dados = await respostas.json();
+        console.log(dados)
+        PlotarPersonagem(dados)
+    }
+    let personagem = ""
+    let personagem_id = ""
+    let criacao = []
+    let personagem_imagem = ""
+    let descricao_personagem = ""
+    function PlotarPersonagem(dados) {
+        console.log(dados[0])
+        for (let i = 0; i < dados.length; i++) {
+            personagem = dados[i].nome
+            console.log("nome: " + personagem)
+            personagem_id = dados[i].id_personagem
+            console.log("id: " + personagem_id)
+            criacao = dados[i].dt_criacao.split("T")
+            criacao = criacao[0].split("-")
+            console.log(`data de criacao: ${criacao[2]}-${criacao[1]}-${criacao[0]}`)
+            personagem_imagem = dados[i].imagem_personagem
+            console.log(`imagem: ${personagem_imagem}`)
+            descricao_personagem = dados[i].descricao
+            console.log(`codigo: ${descricao_personagem}`)
+            if (personagem_imagem == null) {
+                personagem_imagem = "../assets/imgs_rpgreimagine/User_IMG_Exemple.png"
+            }
+            Personagens.innerHTML += `
+            <div class="horizontal PersonagemView">
+                <img src="${personagem_imagem}" alt="" class="PersonagemImagem">
+                <div class="Personagem_desc">
+                    <h3>${personagem}</h3>
+                    <p class="subtitle">Criado em: ${criacao[2]}-${criacao[1]}-${criacao[0]}</p>
+                </div>
+                <div class="direita_Personagem">
+                    <div class="box_Personagem">
+                        <button onclick="mudarPersonagem(${personagem_id})">Alterar Personagem</button><br>
+                        <button onclick="excluirPersonagem(${personagem_id})">Excluir Personagem</button><br>
+                    </div>
+                </div>
+            </div>`
+
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rpg_Reimagine | criar_mundo</title>
+
+
+    <link rel="stylesheet" href="../css/rpgreimagine/loginafter.css">
+    <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Mais fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="esquerda">
+                    <div class="logo" onclick="window.location.href='../index.html'"></div>
+                </div>
+                <ul class="navbar">
+                    <li>
+                        <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_mundos.html">Ver Mundos</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_personagens.html">Ver Personagens</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_campanhas.html">Ver Campanhas</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_perfil.html">Ver Perfil</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <img src="../assets/imgs_rpgreimagine/back_pixelArt.png" alt="Voltar" id="Return" onclick="Voltar()"
+            onmouseover="this.src='../assets/imgs_rpgreimagine/back_pixelArt_OnMouse_Over.png'"
+            onmouseout="this.src='../assets/imgs_rpgreimagine/back_pixelArt.png'" width="50px" style="cursor:pointer">
+        <div class="create_world">
+            <div class="WImage">
+                <img src="../assets/imgs_rpgreimagine/World_IMG_example.png" alt="Imagem_Do_Mundo">
+            </div>
+
+            <div class="horizontal centralizar_linha">
+                <label class="fakeButton" onclick="salvarNome()" id="btnSaveName" style="display:none;">
+                    <img src="./assets/imgs_rpgreimagine/save_No_Mouse.png"
+                        onmouseover="this.src='./assets/imgs_rpgreimagine/save_OnMouse.png'"
+                        onmouseout="this.src='./assets/imgs_rpgreimagine/save_No_Mouse.png'" alt="salvar nome">
+                </label>
+
+                <button onclick="salvarNome()" class="btnSave" id="btnSaveName" style="display:none;">
+                    Salvar
+                </button>
+            </div>
+
+            <div class="nomeMundo">
+
+                <h3 id="tituloMesa">Seu Mundo</h3>
+
+                <input type="text" id="inputNomeMesa" style="display:none" onblur="salvarNomeMesa()">
+
+                <label class="fakeButton" onclick="ativarEdicaoNome()" for="inputNomeMesa">
+                    <img src="../assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
+                        onmouseover="this.src='../assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
+                        onmouseout="this.src='../assets/imgs_rpgreimagine/edit_text_No_Mouse.png'">
+                </label>
+
+            </div>
+            <p style="display:none;" id="alerta_erro"></p>
+
+        </div>
+        <button class="Btn_criarMesa" onclick="criarMesa()">
+            + Criar Mundo
+        </button>
+    </main>
+
+
+    <footer>
+        <div class="container">
+            <div class="esquerda">
+                <div class="horizontal">
+                    <img src="../assets/imgs_rpgreimagine/DICE_RPGREIMAGINE_PixelArt.png" alt="logo_rpg_reimagine">
+
+                    <h4>Tem alguma Reclamação ou Dúvida?</h4>
+                </div>
+                <p>Email para contato: <a href="mailto:gus.paulino@sptech.school">gus.paulino@sptech.school</a></p>
+            </div>
+            <div class="meio">
+            </div>
+            <div class="direita">
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+<script>
+    function Voltar() {
+        window.location.href = "./ver_mundos.html"
+    }
+
+    function ativarEdicaoNome() {
+
+        let h3 = document.getElementById("tituloMesa")
+        let input = document.getElementById("inputNomeMesa")
+
+        nomeAnteriorMesa = h3.textContent
+
+        input.value = h3.textContent
+
+        h3.style.display = "none"
+        input.style.display = "block"
+    }
+
+    function salvarNomeMesa() {
+
+        let h3 = document.getElementById("tituloMesa")
+        let input = document.getElementById("inputNomeMesa")
+        let msg = document.getElementById("alerta_erro")
+
+        let valor = input.value.trim()
+
+        msg.style.display = "none"
+
+        if (valor == "") {
+
+            msg.style.display = "inline"
+            msg.style.color = "red"
+            msg.textContent = "O nome da mesa não pode estar vazio!"
+            input.value = nomeAnteriorMesa
+            h3.textContent = nomeAnteriorMesa
+
+            finalizarEdicaoNome()
+            return
+        }
+
+        h3.textContent = valor
+
+        finalizarEdicaoNome()
+    }
+
+    function finalizarEdicaoNome() {
+
+        let h3 = document.getElementById("tituloMesa")
+        let input = document.getElementById("inputNomeMesa")
+
+        input.style.display = "none"
+        h3.style.display = "block"
+    }
+
+    async function criarMesa() {
+
+        let nome = document.getElementById("tituloMesa")
+        nome = nome.textContent
+        let idUsuario = sessionStorage.ID_USUARIO
+
+        if (nome == "") {
+            document.getElementById("alerta_erro").style.display = "inline"
+            alerta_erro.textContent = "O nome da mesa não pode estar vazio!"
+            setTimeout(function () { document.getElementById("alerta_erro").style.display = "none" }, 3000)
+            return
+        }
+
+        let resposta = await fetch("/mundosRouter/criarMesa", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                idUsuarioServer: idUsuario
+            })
+        })
+
+        if (resposta.ok) {
+            window.location.href = "ver_mundos.html"
+        } else {
+            alert("Erro ao criar mesa")
+        }
+    }
+</script>
+
+</html>
