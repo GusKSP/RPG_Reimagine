@@ -31,9 +31,19 @@ function autenticarUsuario(email, senha) {
     return database.executar(instrucaoSelectUser, [email, senha])
 }
 
+function alterarFoto(imagem, id) {
+    console.log("ACESSEI O USUARIORPG MODEL")
+    var instrucaoUpdateUser = `UPDATE usuario SET imagem_usuario = ? WHERE id_usuario = ?`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoUpdateUser);
+
+    return database.executar(instrucaoUpdateUser, [imagem, id])
+
+}
 
 module.exports = {
     cadastrarRpg,
     verificarEmail,
-    autenticarUsuario
+    autenticarUsuario,
+    alterarFoto
 };
