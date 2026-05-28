@@ -6,313 +6,299 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Dashboards</title>
+    <title>Rpg_Reimagine | Dashboards</title>
 
 
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-    <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
+    <link rel="stylesheet" href="../css/rpgreimagine/dashboards.css">
+    <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
 
-    <!-- scripts do Chart.js - 2022-1 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!--FONT AWESOME-->
-    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+    <!-- Mais fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
-<!-- <body onload=" atualizarFeed()"> -->
+<body onload="AtualizarData(), BuscarElementos()">
 
-<body>
-
-    <div class="janela">
-        <div class="header-left">
-            <h1>AquaTech</h1>
-
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./cards.html">
-                    <h3>Aquários</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav">
-
-                <h3>Gráficos</h3>
-
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
-                </a>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
-        </div>
-
-        <div class="dash">
-            <div id="alerta">
-            </div>
-
-            <div class="btns-dash" id="btnAquario">
-                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-            </div>
-            <div id="graficos">
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="esquerda">
+                    <div class="logo" onclick="window.location.href='../index.html'"></div>
+                </div>
+                <ul class="navbar">
+                    <li>
+                        <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_mundos.html">Ver Mundos</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_personagens.html">Ver Personagens</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_campanhas.html">Ver Campanhas</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_perfil.html">Ver Perfil</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
 
+    </header>
+    <main>
+        <div class="horizontal KPIBOX">
+            <div class="bgTabela">
+                <canvas id="TabelaUsuarios" class="tabela"></canvas>
+            </div>
 
+            <div class="vertical">
+                <div class="KPI" id="idMax1"></div>
+                <div class="KPI" id="idMedia1"></div>
+                <div class="KPI" id="idUltimo1"></div>
+            </div>
+        </div>
+
+        <div class="horizontal KPIBOX">
+            <div class="bgTabela">
+                <canvas id="TabelaMesas" class="tabela"></canvas>
+            </div>
+
+            <div class="vertical">
+                <div class="KPI" id="idMax2"></div>
+                <div class="KPI" id="idMedia2"></div>
+                <div class="KPI" id="idUltimo2"></div>
+            </div>
+        </div>
+
+        <div class="horizontal KPIBOX">
+            <h1>Elementos</h1>
+            <div class="vertical centralizar">
+                <p>Maior Quantidade de Elementos:</p>
+                <div class="KPI" id="idMax3"></div>
+            </div>
+            <div class="vertical centralizar">
+                <p>Média de Elementos Por Mesa</p>
+                <div class="KPI" id="idMedia3"></div>
+            </div>
+        </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="esquerda">
+                <div class="horizontal">
+                    <img src="../assets/imgs_rpgreimagine/DICE_RPGREIMAGINE_PixelArt.png" alt="logo_rpg_reimagine">
+
+                    <h4>Tem alguma Reclamação ou Dúvida?</h4>
+                </div>
+                <p>Email para contato: <a href="mailto:gus.paulino@sptech.school">gus.paulino@sptech.school</a></p>
+            </div>
+            <div class="meio">
+            </div>
+            <div class="direita">
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
 
 <script>
-    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    let Datas = []
+    let GerarDatas = undefined
+    function AtualizarData() {
+        Ultimos10Dias();
+        if (GerarDatas != undefined) {
+            clearInterval(GerarDatas);
+        }
+        GerarDatas = setInterval(Ultimos10Dias, 3600000);
+    }
 
-    let proximaAtualizacao;
+    function Ultimos10Dias() {
+        Datas = [];
+        const hoje = new Date();
+        for (let i = 0; i < 10; i++) {
+            const data = new Date(hoje);
+            data.setDate(hoje.getDate() - i);
+            let data_formatada = formatarData(data, 'dd-mm-aaaa');
+            console.log(data_formatada);
+            trazerData(data_formatada);
+            trazerElementos()
+        }
+    }
 
-    window.onload = exibirAquariosDoUsuario();
+    function formatarData(data, formato) {
+        let data_formatada = formato.replace('dd', data.getDate()).replace('mm', data.getMonth() + 1).replace('aaaa', data.getFullYear())
+        let partes = data_formatada.split('-');
+        for (let i = 0; i < partes.length; i++) {
+            if (partes[i].length < 2 && i < 2) {
+                partes[i] = `0${partes[i]}`;
+            }
+        }
+        console.log(partes)
+        data_formatada = partes.join('-')
+        return data_formatada
+    }
 
-    function exibirAquariosDoUsuario() {
-        var aquarios = JSON.parse(sessionStorage.AQUARIOS);
-        aquarios.forEach(item => {
-            document.getElementById("btnAquario").innerHTML += `
-            <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
-            `
+    async function trazerData(data) {
+        Datas.push(data);
+        if (Datas.length >= 10) {
+            try {
+                console.log(Datas);
+                let resposta = await fetch("/DashboardRpg/UsuariosQuantidade");
+                let dados = await resposta.json();
+                dadosAPI = dados;
+                console.log(dadosAPI)
+                criarTabela("TabelaUsuarios", Datas, dados, "total_usuarios", "Contas Criadas", 1);
+                resposta = await fetch("/DashboardRpg/MesasQuantidade");
+                dados = await resposta.json();
+                console.log(dados);
+                criarTabela("TabelaMesas", Datas, dados, "total_mesas", "Mesas Criadas", 2
+                );
+            }
+            catch (erro) {
+                console.log("Erro ao buscar dados", erro);
+            }
+        }
+    }
 
-            document.getElementById("graficos").innerHTML += `
-                <div id="grafico${item.id}" class="display-none">
-                    <h3 class="tituloGraficos">
-                        <span id="tituloAquario${item.id}">${item.descricao}</span>
-                    </h3>
-                    <div class="graph">
-                        <canvas id="myChartCanvas${item.id}"></canvas>
-                    </div>
-                    <div class="label-captura">
-                        <p id="avisoCaptura${item.id}" style="color: white"></p>
-                    </div>
-                </div>
-            `
+    async function trazerElementos() {
+        try {
+            let resposta = await fetch("/DashboardRpg/ElementosQuantidade")
+            let dados = await resposta.json();
+            console.log(dados)
+            KpiElementos(dados)
+        }
+        catch (erro) {
+            console.log("Erro ao buscar Elementos", erro)
+        }
+    }
 
-            obterDadosGrafico(item.id)
+
+    let dadosAPI = [];
+
+    function criarTabela(idCanvas, ListaDatas, dados, campoTotal, labelGrafico, numeroKPI) {
+
+        const canvas = document.getElementById(idCanvas);
+
+        const quantidadePorDia = [];
+
+        for (let i = 0; i < ListaDatas.length; i++) {
+            let dataAtual = ListaDatas[i];
+            let total = 0;
+            for (let j = 0; j < dados.length; j++) {
+                if (dados[j].data_bd == dataAtual) {
+                    total = dados[j][campoTotal];
+                }
+            }
+            quantidadePorDia.push({
+                Dia: dataAtual,
+                Total: total
+            });
+        }
+        let labels = [];
+        let valores = [];
+        for (let i = quantidadePorDia.length - 1; i >= 0; i--) {
+            labels.push(quantidadePorDia[i].Dia);
+            valores.push(quantidadePorDia[i].Total);
+        }
+
+        let tipo = "line"
+        if (numeroKPI == 2) {
+            tipo = "bar"
+        }
+
+        new Chart(canvas, {
+            type: tipo,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: labelGrafico,
+                    data: valores,
+                    backgroundColor: "rgba(229, 87, 29, .6)",
+                    borderColor: "rgba(229, 87, 29, 1)",
+                    borderWidth: 1,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `${labelGrafico} nos Últimos 10 Dias`,
+                        color: "#F5F5F5"
+                    },
+                    legend: {
+                        onClick: () => { },
+                        labels: {
+                            color: "#F5F5F5"
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: "#F5F5F5"
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: "#F5F5F5"
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
         });
 
-        if (aquarios.length > 0) {
-            exibirAquario(aquarios[0].id)
+        let Max = 0;
+        let Media = 0;
+        let UltimoDia = quantidadePorDia[0].Total;
+
+        for (let i = 0; i < quantidadePorDia.length; i++) {
+            Max += quantidadePorDia[i].Total;
         }
-    }
+        Media = Max / quantidadePorDia.length;
+        document.getElementById(`idMax${numeroKPI}`).innerHTML = Max;
+        document.getElementById(`idMedia${numeroKPI}`).innerHTML = Media.toFixed(1);
+        document.getElementById(`idUltimo${numeroKPI}`).innerHTML = UltimoDia;
 
-    function alterarTitulo(idAquario) {
-        var tituloAquario = document.getElementById(`tituloAquario${idAquario}`)
-        var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id == idAquario).descricao;
-        tituloAquario.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
-    }
-
-    function exibirAquario(idAquario) {
-        let todosOsGraficos = JSON.parse(sessionStorage.AQUARIOS);
-
-        for (i = 0; i < todosOsGraficos.length; i++) {
-            // exibindo - ou não - o gráfico
-            if (todosOsGraficos[i].id != idAquario) {
-                let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
-                if (elementoAtual.classList.contains("display-block")) {
-                    elementoAtual.classList.remove("display-block")
-                }
-                elementoAtual.classList.add("display-none")
-
-                // alterando estilo do botão
-                let btnAtual = document.getElementById(`btnAquario${todosOsGraficos[i].id}`)
-                if (btnAtual.classList.contains("btn-pink")) {
-                    btnAtual.classList.remove("btn-pink")
-                }
-                btnAtual.classList.add("btn-white")
-            }
+        if (UltimoDia < Media - (Media * 0.3)) {
+            document.getElementById(`idUltimo${numeroKPI}`).style.backgroundColor = "darkred"
+        }
+        else if (UltimoDia > Media + (Media * 0.3)) {
+            document.getElementById(`idUltimo${numeroKPI}`).style.backgroundColor = "green"
+        }
+        else {
+            document.getElementById(`idUltimo${numeroKPI}`).style.backgroundColor = "#e5571d"
         }
 
-        // exibindo - ou não - o gráfico
-        let graficoExibir = document.getElementById(`grafico${idAquario}`)
-        graficoExibir.classList.remove("display-none")
-        graficoExibir.classList.add("display-block")
-
-        // alterando estilo do botão
-        let btnExibir = document.getElementById(`btnAquario${idAquario}`)
-        btnExibir.classList.remove("btn-white")
-        btnExibir.classList.add("btn-pink")
     }
 
-    // O gráfico é construído com três funções:
-    // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
-    // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
-    // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
-
-    // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela de medidas.
-    // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
-    // A função *obterDadosGrafico* também invoca a função *plotarGrafico*
-
-    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
-    //     Para ajustar o "select", ajuste o comando sql em src/models
-    function obterDadosGrafico(idAquario) {
-
-        alterarTitulo(idAquario)
-
-        if (proximaAtualizacao != undefined) {
-            clearTimeout(proximaAtualizacao);
-        }
-
-        fetch(`/medidas/ultimas/${idAquario}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-
-                    plotarGrafico(resposta, idAquario);
-
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
+    async function BuscarElementos() {
+        let resposta = await fetch("/DashboardRpg/ElementosQuantidade")
+        let dados = await resposta.json();
+        console.log(dados)
+        trazerKPIs(dados)
     }
-
-    // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-    // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-    function plotarGrafico(resposta, idAquario) {
-
-        console.log('iniciando plotagem do gráfico...');
-
-        // Criando estrutura para plotar gráfico - labels
-        let labels = [];
-
-        // Criando estrutura para plotar gráfico - dados
-        let dados = {
-            labels: labels,
-            datasets: [{
-                label: 'Umidade',
-                data: [],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            },
-            {
-                label: 'Temperatura',
-                data: [],
-                fill: false,
-                borderColor: 'rgb(199, 52, 52)',
-                tension: 0.1
-            }]
-        };
-
-        console.log('----------------------------------------------')
-        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-        console.log(resposta)
-
-        // Inserindo valores recebidos em estrutura para plotar o gráfico
-        for (i = 0; i < resposta.length; i++) {
-            var registro = resposta[i];
-            labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.umidade);
-            dados.datasets[1].data.push(registro.temperatura);
-        }
-
-        console.log('----------------------------------------------')
-        console.log('O gráfico será plotado com os respectivos valores:')
-        console.log('Labels:')
-        console.log(labels)
-        console.log('Dados:')
-        console.log(dados.datasets)
-        console.log('----------------------------------------------')
-
-        // Criando estrutura para plotar gráfico - config
-        const config = {
-            type: 'line',
-            data: dados,
-        };
-
-        // Adicionando gráfico criado em div na tela
-        let myChart = new Chart(
-            document.getElementById(`myChartCanvas${idAquario}`),
-            config
-        );
-
-        setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-    }
-
-
-    // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
-    // buscando a última medida inserida em tabela contendo as capturas, 
-
-    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
-    //     Para ajustar o "select", ajuste o comando sql em src/models
-    function atualizarGrafico(idAquario, dados, myChart) {
-
-
-
-        fetch(`/medidas/tempo-real/${idAquario}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (novoRegistro) {
-
-                    obterdados(idAquario);
-                    // alertar(novoRegistro, idAquario);
-                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                    console.log(`Dados atuais do gráfico:`);
-                    console.log(dados);
-
-                    let avisoCaptura = document.getElementById(`avisoCaptura${idAquario}`)
-                    avisoCaptura.innerHTML = ""
-
-
-                    if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
-                        console.log("---------------------------------------------------------------")
-                        console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-                        avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-                        console.log("Horário do novo dado capturado:")
-                        console.log(novoRegistro[0].momento_grafico)
-                        console.log("Horário do último dado capturado:")
-                        console.log(dados.labels[dados.labels.length - 1])
-                        console.log("---------------------------------------------------------------")
-                    } else {
-                        // tirando e colocando valores no gráfico
-                        dados.labels.shift(); // apagar o primeiro
-                        dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
-
-                        dados.datasets[0].data.shift();  // apagar o primeiro de umidade
-                        dados.datasets[0].data.push(novoRegistro[0].umidade); // incluir uma nova medida de umidade
-
-                        dados.datasets[1].data.shift();  // apagar o primeiro de temperatura
-                        dados.datasets[1].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
-
-                        myChart.update();
-                    }
-
-                    // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-                // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-
+    function trazerKPIs(dados) {
+        let Max = dados[0].maior_quantidade_elementos
+        let Media = dados[0].media_elementos_por_mesa
+        let ValorMax = document.getElementById("idMax3")
+        let ValorMed = document.getElementById("idMedia3")
+        ValorMax.innerHTML = Max
+        ValorMed.innerHTML = Media
     }
 </script>
