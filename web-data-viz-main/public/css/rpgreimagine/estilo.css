@@ -5,9 +5,14 @@ html {
   scroll-behavior: smooth;
 }
 
+* {
+  margin: 0%;
+  padding: 0%;
+}
+
 body {
-  margin: 0;
-  padding: 0;
+  margin: 0%;
+  padding: 0%;
   font-family: "Raleway", sans-serif;
   background-color: black
 }
@@ -16,21 +21,27 @@ body {
 .container {
   display: flex;
   width: 100%;
-  padding: 0% 10%;
   color: #fff;
 }
+
+.social .container {
+  align-items: center;
+  justify-content: center;
+  padding: 0% 10%;
+
+}
+
 
 .horizontal {
   display: flex;
   flex-direction: row;
 }
 
-.logo {
+/* .logo {
   width: 300px;
-  height: 150px;
+  height: 150px; */
 
-  /* Foto de Nika Benedictova no Pexels: https://www.pexels.com/pt-br/foto/borrao-mancha-nevoa-numeros-7150643 */
-  background-image: url('../../assets/imgs_rpgreimagine/RPG_Reimagine_Logo.png');
+/* background-image: url('../../assets/imgs_rpgreimagine/RPG_Reimagine_Logo.png');
   background-size: cover;
 }
 
@@ -115,7 +126,7 @@ body {
 
 .header h1 {
   margin: 0;
-}
+} */
 
 /* BANNER */
 
@@ -131,10 +142,11 @@ body {
 }
 
 .banner .container {
-  padding-left: 20%;
   justify-content: left;
   align-items: center;
   height: 100%;
+  width: fit-content;
+  padding: 0% 20%;
 }
 
 .banner .container p {
@@ -168,6 +180,7 @@ body {
   gap: 100px;
 }
 
+
 .boxes .esquerda {
   display: flex;
   flex-direction: column;
@@ -182,12 +195,13 @@ body {
   width: 50%;
 }
 
-.boxes img {
+.boxes img,
+.box img {
   width: 170px;
 }
 
-.social p {
-  text-align: justify;
+.social .box p {
+  text-align: center;
 }
 
 .social li {
@@ -198,6 +212,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 
 .social .container .boxes:nth-child(2) .box:nth-child(1) {
@@ -211,59 +227,6 @@ body {
 .social .container .boxes:nth-child(1) .box:nth-child(1) p {
   width: 100%;
   text-align: center;
-}
-
-/* FOOTER */
-
-.footer {
-  background-color: #222;
-  height: fit-content;
-  color: #fff;
-  display: flex;
-  font-size: 15px;
-  flex-wrap: wrap;
-}
-
-.footer .horizontal {
-  align-items: center;
-  gap: 10px;
-}
-
-.footer img {
-  width: 2rem;
-  height: fit-content;
-}
-
-.footer a {
-  color: #e5571d;
-}
-
-.footer .container {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.footer .container .esquerda {
-  width: 33%;
-}
-
-.footer .container .meio {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-}
-
-.footer .container .meio h4:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.footer .container .direita {
-  width: 33%;
 }
 
 /* LOGIN */
@@ -442,6 +405,7 @@ input {
   margin-top: 5px;
 }
 
+/* 
 .loading-div {
   width: 50px;
   margin: auto;
@@ -451,7 +415,7 @@ input {
 .loading-div img {
   height: 50px;
   width: 50px;
-}
+} */
 
 /* SIMULADOR */
 /* 
@@ -466,7 +430,7 @@ input {
 } */
 
 /* ALERTA */
-
+/* 
 #alerta {
   position: absolute;
   right: 0;
@@ -503,26 +467,4 @@ input {
   background-image: url('https://cdn-icons-png.flaticon.com/512/1157/1157000.png');
   background-size: cover;
   animation-iteration-count: infinite;
-}
-
-@keyframes bell {
-  0% {
-    transform: rotate(25deg)
-  }
-
-  25% {
-    transform: rotate(-25deg)
-  }
-
-  50% {
-    transform: rotate(25deg)
-  }
-
-  75% {
-    transform: rotate(-25deg)
-  }
-
-  100% {
-    transform: rotate(25deg)
-  }
-}
+} */
