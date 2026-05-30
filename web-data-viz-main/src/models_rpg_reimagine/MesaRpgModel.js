@@ -2,28 +2,28 @@ console.log("MODEL MESA RPG CARREGADO");
 var database = require("../database_rpgreimagine/configRpg")
 
 function carregarMesas(id_usuario) {
-    var instrucaoSelectMesa = ` SELECT id_mesa, fk_usuario_criador, imagem_mesa, nome_mesa, dt_criacao, codigo FROM mesas WHERE fk_usuario_criador = ?`
+    var instrucaoSelectMesa = `SELECT u.id_usuario AS Id_Usuario, u.nome AS Nome_Usuario, u.email AS Email_Usuario, m.id_mesa AS Id_mesa, m.imagem_mesa AS Imagem_Mesa, m.nome_mesa AS Nome_Mesa, DATE(m.dt_criacao) AS Data_Criacao, m.codigo AS Codigo_mesa FROM Usuario u LEFT JOIN Mesas m ON m.fk_usuario_criador=u.id_usuario WHERE fk_usuario_criador = ?`
     console.log("Executando a instrução SQL: \n" + instrucaoSelectMesa);
     return database.executar(instrucaoSelectMesa, [id_usuario])
 }
 
 function criarCodigo(codigo, id_mesa) {
-    var instrucaoUpdateMesa = `UPDATE mesas SET codigo = ? WHERE id_mesa = ?`
+    var instrucaoUpdateMesa = `UPDATE Mesas SET codigo = ? WHERE id_mesa = ?`
     console.log("Executando a instrução SQL: \n" + instrucaoUpdateMesa);
     return database.executar(instrucaoUpdateMesa, [codigo, id_mesa])
 }
 
 function alterarFotoMesa(imagem_mesa, id_mesa) {
-    var instrucaoUpdateMesa = `UPDATE mesas SET imagem_mesa = ? WHERE id_mesa = ?`
+    var instrucaoUpdateMesa = `UPDATE Mesas SET imagem_mesa = ? WHERE id_mesa = ?`
     console.log("Executando a instrução SQL: \n" + instrucaoUpdateMesa);
     return database.executar(instrucaoUpdateMesa, [imagem_mesa, id_mesa])
 }
 
-function criarMesa(id_usuario, nome_mesa) {
-    var instrucaoInsertMesa = `INSERT INTO mesas (fk_usuario_criador, nome_mesa) VALUES
-    (?, ?)`
+function criarMesa(id_usuario, nome_mesa, codigo) {
+    var instrucaoInsertMesa = `INSERT INTO Mesas (fk_usuario_criador, nome_mesa, codigo) VALUES
+    (?, ?, ?)`
     console.log("Executando a instrução SQL: \n" + instrucaoInsertMesa);
-    return database.executar(instrucaoInsertMesa, [id_usuario, nome_mesa])
+    return database.executar(instrucaoInsertMesa, [id_usuario, nome_mesa, codigo])
 }
 function excluirMesa(id_mesa) {
 
@@ -53,10 +53,17 @@ function excluirMesa(id_mesa) {
             return database.executar(instrucaoDeleteMesa, [id_mesa])
         })
 }
+
+function VerificarCodigoModel(codigo) {
+    var instrucaoSelectMesa = `SELECT COUNT(id_mesa) AS Qtd_mesas FROM Mesas WHERE Codigo = ?;`
+    console.log("Executando a instrução SQL: \n" + instrucaoSelectMesa);
+    return database.executar(instrucaoSelectMesa, [codigo])
+}
 module.exports = {
     carregarMesas,
     criarCodigo,
     alterarFotoMesa,
     criarMesa,
-    excluirMesa
+    excluirMesa,
+    VerificarCodigoModel
 };

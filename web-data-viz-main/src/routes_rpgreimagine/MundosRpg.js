@@ -15,4 +15,12 @@ router.post("/criarMesa", function (req, res) {
     MundosController.criarMesaController(req, res)
 });
 
+router.post("/verificarCodigo", function (req, res) {
+    MundosController.VerificarCodigoController(req, res)
+})
+
+router.post("/salvarCodigoRoute", function (req, res) {
+    MundosController.SalvarCodigoController(req, res)
+})
+
 module.exports = router;

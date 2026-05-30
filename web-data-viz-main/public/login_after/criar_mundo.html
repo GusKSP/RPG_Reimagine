@@ -27,14 +27,14 @@
         rel="stylesheet">
 </head>
 
-<body>
+<body onload="SetarPadrao()">
     <header>
         <div class="header">
             <div class="container">
                 <div class="esquerda">
                     <div class="logo" onclick="window.location.href='../index.html'"></div>
                 </div>
-                <ul class="navbar">
+                <ul class="navbar" id="navbar">
                     <li>
                         <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
                     </li>
@@ -67,14 +67,10 @@
 
             <div class="horizontal centralizar_linha">
                 <label class="fakeButton" onclick="salvarNome()" id="btnSaveName" style="display:none;">
-                    <img src="./assets/imgs_rpgreimagine/save_No_Mouse.png"
-                        onmouseover="this.src='./assets/imgs_rpgreimagine/save_OnMouse.png'"
-                        onmouseout="this.src='./assets/imgs_rpgreimagine/save_No_Mouse.png'" alt="salvar nome">
+                    <img src="./assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
+                        onmouseover="this.src='./assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
+                        onmouseout="this.src='./assets/imgs_rpgreimagine/edit_text_No_Mouse.png'" alt="salvar nome">
                 </label>
-
-                <button onclick="salvarNome()" class="btnSave" id="btnSaveName" style="display:none;">
-                    Salvar
-                </button>
             </div>
 
             <div class="nomeMundo">
@@ -93,7 +89,12 @@
             <p style="display:none;" id="alerta_erro"></p>
 
         </div>
-        <button class="Btn_criarMesa" onclick="criarMesa()">
+
+        <div>
+            <p>Código: <span id="codigoAtual">------</span></p>
+            <button class="Btn_unico" onclick="GerarCodigo()">Gerar Código</button>
+        </div>
+        <button class="Btn_unico" onclick="criarMesa()">
             + Criar Mundo
         </button>
     </main>
@@ -122,6 +123,11 @@
 <script>
     function Voltar() {
         window.location.href = "./ver_mundos.html"
+    }
+
+
+    function SetarPadrao() {
+        sessionStorage.removeItem("GUARDAR_CODIGO")
     }
 
     function ativarEdicaoNome() {
@@ -178,6 +184,7 @@
         let nome = document.getElementById("tituloMesa")
         nome = nome.textContent
         let idUsuario = sessionStorage.ID_USUARIO
+        let codigo = sessionStorage.GUARDAR_CODIGO
 
         if (nome == "") {
             document.getElementById("alerta_erro").style.display = "inline"
@@ -193,7 +200,8 @@
             },
             body: JSON.stringify({
                 nomeServer: nome,
-                idUsuarioServer: idUsuario
+                idUsuarioServer: idUsuario,
+                codigoServer: codigo
             })
         })
 
@@ -203,6 +211,12 @@
             alert("Erro ao criar mesa")
         }
     }
+
+    function mostrarCodigo() {
+        codigoAtual.textContent = sessionStorage.GUARDAR_CODIGO
+    }
 </script>
 
 </html>
+<script src="../scripts/navbar.js"></script>
+<script src="../scripts/CriarCodigo.js"></script>

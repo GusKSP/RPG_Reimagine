@@ -34,7 +34,7 @@
                 <div class="esquerda">
                     <div class="logo" onclick="window.location.href='../index.html'"></div>
                 </div>
-                <ul class="navbar">
+                <ul class="navbar" id="navbar">
                     <li>
                         <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
                     </li>
@@ -57,9 +57,10 @@
 
 
     <main>
+
         <div id="Mesas">
         </div>
-        <button onclick="window.location.href='criar_mundo.html'" class="Btn_criarMesa">+Criar Mesa</button>
+        <button onclick="window.location.href='criar_mundo.html'" class="Btn_unico">+Criar Mesa</button>
     </main>
 
 
@@ -108,16 +109,16 @@
     let codigo_mesa = ""
     function PlotarMesa(dados) {
         for (let i = 0; i < dados.length; i++) {
-            mesa = dados[i].nome_mesa
+            mesa = dados[i].Nome_Mesa
             console.log("nome: " + mesa)
-            mesa_id = dados[i].id_mesa
+            mesa_id = dados[i].Id_mesa
             console.log("id: " + mesa_id)
-            criacao = dados[i].dt_criacao.split("T")
+            criacao = dados[i].Data_Criacao.split("T")
             criacao = criacao[0].split("-")
             console.log(`data de criacao: ${criacao[2]}-${criacao[1]}-${criacao[0]}`)
-            mesa_imagem = dados[i].imagem_mesa
+            mesa_imagem = dados[i].Imagem_Mesa
             console.log(`imagem: ${mesa_imagem}`)
-            codigo_mesa = dados[i].codigo
+            codigo_mesa = dados[i].Codigo_mesa
             console.log(`codigo: ${codigo_mesa}`)
             if (mesa_imagem == null) {
                 mesa_imagem = "../assets/imgs_rpgreimagine/World_IMG_Exemple.png"
@@ -134,7 +135,7 @@
                 </div>
                 <div class="direita_mesa">
                     <div class="box_mesa">
-                        <button onclick="mudarMesa(${mesa_id})">Alterar Regras</button><br>
+                        <button onclick="mudarMesa(${mesa_id})">Alterar Mundo</button><br>
                         <button onclick="excluirMesa(${mesa_id})">Excluir Mundo</button><br>
                         <p>Código: <input type="text" readonly value="${codigo_mesa}"></p>
                     </div>
@@ -160,7 +161,6 @@
         })
 
         if (resposta.ok) {
-            alert("Mundo excluído com sucesso!")
             window.location.reload()
         } else {
             alert("Erro ao excluir mundo")
@@ -169,3 +169,4 @@
 </script>
 
 </html>
+<script src="../scripts/navbar.js"></script>

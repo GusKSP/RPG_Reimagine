@@ -33,13 +33,47 @@ function criarMesaController(req, res) {
 
     var nome = req.body.nomeServer
     var idUsuario = req.body.idUsuarioServer
+    var codigo = req.body.codigoServer
 
     if (!nome || !idUsuario) {
         res.status(400).send("Dados inválidos")
         return
     }
 
-    MundosModel.criarMesa(idUsuario, nome)
+    MundosModel.criarMesa(idUsuario, nome, codigo)
+        .then(function (resultado) {
+            res.json(resultado)
+        })
+        .catch(function (erro) {
+            console.log("ERRO COMPLETO:", erro)
+            res.status(500).json(erro.sqlMessage)
+        })
+}
+
+function VerificarCodigoController(req, res) {
+    var codigo = req.body.codigoServer
+    if (!codigo) {
+        res.status(400).send("Código inválido")
+        return
+    }
+    MundosModel.VerificarCodigoModel(codigo)
+        .then(function (resultado) {
+            res.json(resultado)
+        })
+        .catch(function (erro) {
+            console.log("ERRO COMPLETO:", erro)
+            res.status(500).json(erro.sqlMessage)
+        })
+}
+
+function SalvarCodigoController(req, res) {
+    var codigo = req.body.codigoServer
+    var id_mesa = req.body.idMesaServer
+    if (!codigo || !id_mesa) {
+        res.status(400).send("Código inválido")
+        return
+    }
+    MundosModel.criarCodigo(codigo, id_mesa)
         .then(function (resultado) {
             res.json(resultado)
         })
@@ -52,5 +86,8 @@ function criarMesaController(req, res) {
 module.exports = {
     BuscarMundosController,
     excluirMesaController,
-    criarMesaController
+    criarMesaController,
+    VerificarCodigoController,
+    SalvarCodigoController
+
 }   

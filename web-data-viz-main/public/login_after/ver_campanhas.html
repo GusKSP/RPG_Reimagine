@@ -27,14 +27,14 @@
         rel="stylesheet">
 </head>
 
-<body>
+<body onload="carregarCampanhas()">
     <header>
         <div class="header">
             <div class="container">
                 <div class="esquerda">
                     <div class="logo" onclick="window.location.href='../index.html'"></div>
                 </div>
-                <ul class="navbar">
+                <ul class="navbar" id="navbar">
                     <li>
                         <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
                     </li>
@@ -54,7 +54,33 @@
             </div>
         </div>
     </header>
-    <main></main>
+    <main>
+        <div class="containerCampanhas">
+
+            <div class="topo">
+                <h1>Suas Campanhas</h1>
+            </div>
+
+            <div id="divCampanhas" class="listaCampanhas">
+            </div>
+
+        </div>
+        <button onclick="EntrarEmCampanha()" class="Btn_unico">+ Entrar Em Campanha</button>
+        <div class="modal" id="modal" style="display: none;">
+            <div class="modal_content">
+                <h1>Entrar Em Campanha</h1>
+                <div class="formulario">
+                    <h3>Insira o código da campanha</h3>
+                    <input type="text" id="Codigo_campanha" oninput="VerificarCodigo()" placeholder="Código da Campanha"
+                        maxlength="8">
+                    <div class="horizontal">
+                        <button class="Btn_unico" onclick="Cancelar()">Cancelar</button>
+                        <button class="Btn_unico" onclick="Confirmar()">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
     <footer>
         <div class="container">
             <div class="esquerda">
@@ -76,3 +102,127 @@
 </body>
 
 </html>
+
+<script src="../scripts/navbar.js"></script>
+
+<script>
+    async function carregarCampanhas() {
+        let idUsuario = sessionStorage.ID_USUARIO;
+        let resposta = await fetch("/campanhasRouter/buscarCampanhas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario
+            })
+        });
+        let campanhas = await resposta.json();
+        console.log(campanhas);
+        let divCampanhas = document.getElementById("divCampanhas");
+        // divCampanhas.innerHTML = "";
+        if (campanhas.length == 0) {
+            divCampanhas.innerHTML = `
+                <p>Você ainda não participa de nenhuma campanha.</p>
+            `;
+            return;
+        }
+        for (let i = 0; i < campanhas.length; i++) {
+            let campanha = campanhas[i];
+            let imagemMesa = campanha.imagem_mesa;
+            let codigo = campanha.codigo_mesa
+            if (imagemMesa == null) {
+                imagemMesa = "../assets/imgs_rpgreimagine/World_IMG_example.png";
+            }
+            if (codigo == null) {
+                codigo = "-------"
+            }
+            divCampanhas.innerHTML += `
+                <div class="cardCampanha">
+                    <div class="imagemCampanha">
+                        <img src="${imagemMesa}" alt="Imagem campanha">
+                    </div>
+                    <div class="horizontal fill">
+                        <div class="vertical">
+                            <h2>${campanha.Nome_Mesa}</h2>
+                            <p><b>Código:</b> ${codigo}</p>
+                            <p>
+                                <b>Criador:</b>
+                                ${campanha.nome_criador}
+                            </p>
+                        </div>
+                        <div class="infosCampanha">
+                                <button onclick="verInformacoes(${campanha.Id_Mesa})" class="Btn_unico"> Informações da campanha
+                                </button>
+                        </div>
+                        </div>
+                </div>
+            `;
+        }
+    }
+    let modal = document.getElementById("modal")
+    let codigoCampanha = document.getElementById("Codigo_campanha")
+    function EntrarEmCampanha() {
+        modal.style.display = "flex"
+        codigoCampanha.value = ""
+    }
+
+    function VerificarCodigo() {
+        let input = document.getElementById("Codigo_campanha");
+        let DigitosHex = "1234567890abcdefABCDEF";
+        let valorFinal = "";
+
+        for (let i = 0; i < input.value.length; i++) {
+            let caractere = input.value[i];
+            if (DigitosHex.includes(caractere)) {
+                valorFinal += caractere;
+            }
+        }
+        input.value = valorFinal;
+    }
+
+    async function verInformacoes(idMesa) {
+        console.log("Usuarios...")
+        console.log("Personagens...")
+        console.log("Regras...")
+    }
+
+    async function Confirmar() {
+        let codigo = document.getElementById("Codigo_campanha").value;
+
+        if (codigo.length < 8) {
+            alert("Código Inválido!");
+            return;
+        }
+
+        let resposta = await fetch("/campanhasRouter/entrarCampanha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                codigoServer: codigo,
+                idUsuarioServer: sessionStorage.ID_USUARIO
+            })
+        });
+
+        if (resposta.ok) {
+            let dados = await resposta.json();
+            if (dados.length == 0) {
+                alert("Campanha não encontrada!");
+                return;
+            }
+            alert("Você entrou na campanha!");
+            modal.style.display = "none";
+            window.location.reload()
+        } else {
+            alert("Erro ao entrar na campanha!");
+        }
+    }
+
+    function Cancelar() {
+        modal.style.display = "none"
+        codigoCampanha.value = ""
+    }
+
+</script>
