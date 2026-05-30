@@ -1,7 +1,7 @@
 var DashboardModel = require("../models_rpg_reimagine/DashModel")
 
 function buscarUsuariosUltimosDias(req, res) {
-    DashboardModel.carregarFuncionarios()
+    DashboardModel.carregarUsuarios()
         .then((resultado) => {
             console.log("RESULTADO SQL:", resultado);
             res.status(200).json(resultado);

@@ -1,10 +1,10 @@
 console.log("MODEL MESA RPG CARREGADO");
 var database = require("../database_rpgreimagine/configRpg")
 
-function carregarFuncionarios() {
+function carregarUsuarios() {
 
     var instrucaoSelectDash = `SELECT DATE_FORMAT(data, '%d-%m-%Y') AS data_bd, COUNT(*) AS total_usuarios 
-FROM (SELECT DATE(dt_registro) AS data FROM Usuario WHERE DATEDIFF(CURDATE(), dt_registro) BETWEEN 0 AND 9
+FROM (SELECT DATE(dt_registro) AS data FROM Usuario WHERE DATEDIFF(CURDATE(), DATE(dt_registro)) BETWEEN 0 AND 9
 ) u
 GROUP BY data, data_bd
 ORDER BY data;`
@@ -14,7 +14,7 @@ ORDER BY data;`
 
 function carregarMesas() {
     var instrucaoSelectDash = `SELECT DATE_FORMAT(data, '%d-%m-%Y') AS data_bd, COUNT(*) AS total_mesas 
-    FROM (SELECT DATE(dt_criacao) AS data FROM Mesas WHERE DATEDIFF(CURDATE(), dt_criacao) BETWEEN 0 AND 9
+    FROM (SELECT DATE(dt_criacao) AS data FROM Mesas WHERE DATEDIFF(CURDATE(), DATE(dt_criacao)) BETWEEN 0 AND 9
     ) m
     GROUP BY data, data_bd
     ORDER BY data;`
@@ -34,7 +34,7 @@ function carregarElementos() {
 }
 
 module.exports = {
-    carregarFuncionarios,
+    carregarUsuarios,
     carregarMesas,
     carregarElementos
 }
