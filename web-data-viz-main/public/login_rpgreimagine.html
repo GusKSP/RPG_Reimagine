@@ -33,17 +33,17 @@
         <div class="header">
             <div class="container">
                 <div class="esquerda">
-                    <div class="logo" onclick="window.location.href='../index.html'"></div>
+                    <div class="logo" onclick="window.location.href='./index.html'"></div>
                 </div>
                 <ul class="navbar">
                     <li>
                         <div class="btn_navbar">
-                            <a href="login_rpgreimagine.html">Login</a>
+                            <a href="./login_rpgreimagine.html">Login</a>
                         </div>
                     </li>
                     <li>
                         <div class="btn_navbar">
-                            <a href="cadastro_rpgreimagine.html">Cadastro</a>
+                            <a href="./cadastro_rpgreimagine.html">Cadastro</a>
                         </div>
                     </li>
                 </ul>
@@ -143,10 +143,10 @@
             if (resposta.ok) {
                 console.log(resposta);
 
-                resposta.json().then(json => {
+                resposta.json().then(function (json) {
                     console.log(json);
                     let usuario = json[0]
-                    console.log("Chaves disponíveis:", Object.keys(json))
+                    console.log(usuario)
                     console.log(JSON.stringify(json));
                     sessionStorage.ID_USUARIO = usuario.id_usuario;
                     sessionStorage.EMAIL_USUARIO = usuario.email;
@@ -155,7 +155,7 @@
                     sessionStorage.SUPER_USER = usuario.super_usuario;
                     //sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
                     mostrarErro()
-                    mensagem_erro.innerHTML = "Login feito com sucesso! Redirecionando para a tela Jogar... "
+                    mensagem_erro.innerHTML = "Login feito com sucesso! Redirecionando para a tela de Usuario... "
 
                     setTimeout(function () {
                         window.location = "./login_after/ver_mundos.html";
