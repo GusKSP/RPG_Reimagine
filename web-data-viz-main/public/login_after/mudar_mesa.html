@@ -11,9 +11,6 @@
 
     <link rel="stylesheet" href="../css/rpgreimagine/loginafter.css">
     <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css">
-
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Mais fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,14 +24,14 @@
         rel="stylesheet">
 </head>
 
-<body>
+<body onload="trazerInformacoes()">
     <header>
         <div class="header">
             <div class="container">
                 <div class="esquerda">
                     <div class="logo" onclick="window.location.href='../index.html'"></div>
                 </div>
-                <ul class="navbar">
+                <ul class="navbar" id="navbar">
                     <li>
                         <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
                     </li>
@@ -57,9 +54,59 @@
 
 
     <main>
-        <img src="../assets/imgs_rpgreimagine/back_pixelArt.png" alt="Voltar" id="Return" onclick="Voltar()"
-            onmouseover="this.src='../assets/imgs_rpgreimagine/back_pixelArt_OnMouse_Over.png'"
-            onmouseout="this.src='../assets/imgs_rpgreimagine/back_pixelArt.png'" width="50px" style="cursor:pointer">
+        <div class="horizontal" style="justify-content: space-between; padding: 1rem; align-items: center;">
+            <img src="../assets/imgs_rpgreimagine/back_pixelArt.png" alt="Voltar" id="Return" onclick="Voltar()"
+                onmouseover="this.src='../assets/imgs_rpgreimagine/back_pixelArt_OnMouse_Over.png'"
+                onmouseout="this.src='../assets/imgs_rpgreimagine/back_pixelArt.png'" width="50px"
+                style="cursor:pointer">
+            <ul class="AlterarRegrasPag">
+                <li>
+                    <a href="RegrasRpg.html">Alterar Regras</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="horizontal" style="justify-content: space-between; padding-right: 2rem;">
+            <div class="create_world">
+                <div class="WImage">
+                    <img src="../assets/imgs_rpgreimagine/World_IMG_example.png" alt="Imagem_Do_Mundo">
+                </div>
+
+                <div class="horizontal centralizar_linha">
+                    <label class="fakeButton" onclick="salvarNome()" id="btnSaveName" style="display:none;">
+                        <img src="../assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
+                            onmouseover="this.src='../assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
+                            onmouseout="this.src='../assets/imgs_rpgreimagine/edit_text_No_Mouse.png'"
+                            alt="salvar nome">
+                    </label>
+                </div>
+
+                <div class="nomeMundo">
+
+                    <h3 id="tituloMesa"></h3>
+
+                    <input type="text" id="inputNomeMesa" style="display:none" onblur="salvarNomeMesa()">
+
+                    <label class="fakeButton" onclick="ativarEdicaoNome()" for="inputNomeMesa">
+                        <img src="../assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
+                            onmouseover="this.src='../assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
+                            onmouseout="this.src='../assets/imgs_rpgreimagine/edit_text_No_Mouse.png'">
+                    </label>
+
+                </div>
+                <p style="display:none;" id="alerta_erro"></p>
+
+                <p>Código: <span id="codigoAtual"></span></p>
+                <button class="Btn_unico" onclick="GerarCodigo()">Gerar Código</button>
+
+            </div>
+            <div id="direita_info">
+                <p class="data" id="Data">Data de criação:</p>
+            </div>
+        </div>
+        <button class="Btn_unico" onclick="SalvarAlteracoes()">
+            + Salvar Alterações
+        </button>
     </main>
 
 
@@ -83,14 +130,129 @@
 
 </body>
 
+</html>
+<script src="../scripts/RemoverItens.js"></script>
+<script src="../scripts/navbar.js"></script>
+<script src="../scripts/CriarCodigo.js"></script>
 <script>
+    sessionStorage.removeItem("GUARDAR_CODIGO")
     function Voltar() {
-        sessionStorage.removeItem('ID_MUNDO')
+        RemoverItens()
         window.location.href = "./ver_mundos.html"
+    }
+    async function trazerInformacoes() {
+        let id_mundo = sessionStorage.ID_MUNDO
+        console.log(id_mundo)
+        let resultado = await fetch("/mundosRouter/trazerInfos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServerMundo: id_mundo
+            })
+        })
+        let dados = await resultado.json();
+        TrazerMesa(dados)
+    }
+    function TrazerMesa(dados) {
+        console.log(dados)
+        let tratamento = dados[0]
+        if (tratamento.id_mesa == null) {
+            console.log("erro ao trazer mundo")
+        }
+        else {
+            console.log(tratamento)
+            tituloMesa.textContent = `${tratamento.nome_mesa}`
+            codigoAtual.textContent = `${tratamento.codigo}`
+            let Data_Atual = tratamento.dt_criacao.split("T")
+            Data_Atual = Data_Atual[0].split("-")
+            Data_atual = `${Data_Atual[2]}/${Data_Atual[1]}/${Data_Atual[0]}`
+            Data.textContent = `Data de criação: ${Data_atual}`
+        }
+    }
 
+    function mostrarCodigo() {
+        codigoAtual.textContent = sessionStorage.GUARDAR_CODIGO
+    }
+
+    function ativarEdicaoNome() {
+
+        let h3 = document.getElementById("tituloMesa")
+        let input = document.getElementById("inputNomeMesa")
+
+        nomeAnteriorMesa = h3.textContent
+
+        input.value = h3.textContent
+
+        h3.style.display = "none"
+        input.style.display = "block"
+    }
+
+    function salvarNomeMesa() {
+
+        let h3 = document.getElementById("tituloMesa")
+        let input = document.getElementById("inputNomeMesa")
+        let msg = document.getElementById("alerta_erro")
+
+        let valor = input.value.trim()
+
+        msg.style.display = "none"
+
+        if (valor == "") {
+
+            msg.style.display = "inline"
+            msg.style.color = "red"
+            msg.textContent = "O nome da mesa não pode estar vazio!"
+            input.value = nomeAnteriorMesa
+            h3.textContent = nomeAnteriorMesa
+
+            finalizarEdicaoNome()
+            return
+        }
+
+        h3.textContent = valor
+
+        finalizarEdicaoNome()
+    }
+
+    function finalizarEdicaoNome() {
+
+        let h3 = document.getElementById("tituloMesa")
+        let input = document.getElementById("inputNomeMesa")
+
+        input.style.display = "none"
+        h3.style.display = "block"
+    }
+    async function SalvarAlteracoes() {
+        let id_mundo = sessionStorage.ID_MUNDO
+        console.log(id_mundo)
+        let nome = document.getElementById("tituloMesa")
+        console.log(nome)
+        nome = nome.textContent
+        console.log(nome)
+        let imagem = null
+        let codigo = sessionStorage.GUARDAR_CODIGO
+        if (!codigo) {
+            codigo = document.getElementById("codigoAtual").textContent
+        }
+        console.log(codigo)
+        let resposta = await fetch("/mundosRouter/salvarAlteracoes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServerMundo: id_mundo,
+                nomeServer: nome,
+                imagemServer: imagem,
+                codigoServer: codigo
+            })
+        })
+        if (resposta.ok) {
+            window.location.href = "ver_mundos.html"
+        } else {
+            alert("Erro ao salvar alterações")
+        }
     }
 </script>
-
-</html>
-<script src="../scripts/navbar.js"></script>
-<script></script>

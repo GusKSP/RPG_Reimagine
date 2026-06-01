@@ -11,9 +11,6 @@
 
     <link rel="stylesheet" href="../css/rpgreimagine/loginafter.css">
     <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css">
-
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Mais fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,18 +64,6 @@
         </div>
         <button onclick="EntrarEmCampanha()" class="Btn_unico">+ Entrar Em Campanha</button>
         <div class="modal" id="modal" style="display: none;">
-            <div class="modal_content">
-                <h1>Entrar Em Campanha</h1>
-                <div class="formulario">
-                    <h3>Insira o código da campanha</h3>
-                    <input type="text" id="Codigo_campanha" oninput="VerificarCodigo()" placeholder="Código da Campanha"
-                        maxlength="8">
-                    <div class="horizontal">
-                        <button class="Btn_unico" onclick="Cancelar()">Cancelar</button>
-                        <button class="Btn_unico" onclick="Confirmar()">Confirmar</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
     <footer>
@@ -104,8 +89,11 @@
 </html>
 
 <script src="../scripts/navbar.js"></script>
+<script src="../scripts/RemoverItens.js"></script>
+</script>
 
 <script>
+    RemoverItens()
     async function carregarCampanhas() {
         let idUsuario = sessionStorage.ID_USUARIO;
         let resposta = await fetch("/campanhasRouter/buscarCampanhas", {
@@ -154,6 +142,8 @@
                         <div class="infosCampanha">
                                 <button onclick="verInformacoes(${campanha.Id_Mesa})" class="Btn_unico"> Informações da campanha
                                 </button>
+                                <button onclick="ConfirmarSaida(${campanha.Id_Mesa})" class="Btn_unico"> Sair da campanha
+                                </button>
                         </div>
                         </div>
                 </div>
@@ -164,6 +154,18 @@
     let codigoCampanha = document.getElementById("Codigo_campanha")
     function EntrarEmCampanha() {
         modal.style.display = "flex"
+        modal.innerHTML = `
+            <div class="modal_content">
+                <h1>Entrar Em Campanha</h1>
+                <div class="formulario">
+                    <h3>Insira o código da campanha</h3>
+                    <input type="text" id="Codigo_campanha" oninput="VerificarCodigo()" placeholder="Código da Campanha"
+                        maxlength="8">
+                    <div class="horizontal">
+                        <button class="Btn_unico" onclick="Cancelar()">Cancelar</button>
+                        <button class="Btn_unico" onclick="Confirmar()">Confirmar</button>
+                    </div>
+                </div>`
         codigoCampanha.value = ""
     }
 
@@ -181,10 +183,9 @@
         input.value = valorFinal;
     }
 
-    async function verInformacoes(idMesa) {
-        console.log("Usuarios...")
-        console.log("Personagens...")
-        console.log("Regras...")
+    function verInformacoes(idMesa) {
+        sessionStorage.ID_MESA = idMesa
+        window.location.href = "Info_Campanha.html"
     }
 
     async function Confirmar() {
@@ -217,6 +218,52 @@
             window.location.reload()
         } else {
             alert("Erro ao entrar na campanha!");
+        }
+    }
+
+    function ConfirmarSaida(id_mesa) {
+        let modal = document.getElementById("modal")
+        modal.style.display = "flex"
+        modal.innerHTML = `
+            <div class="modal_content">
+                <h1>Sair da Campanha</h1>
+                <h3>Tem certeza que deseja sair da campanha?</h3>
+                <div class="formulario">
+                    <div class="horizontal">
+                        <button class="Btn_unico" onclick="Cancelar()">Cancelar</button>
+                        <button class="Btn_unico" onclick="SairDaCampanha(${id_mesa})">Confirmar</button>
+                    </div>
+                </div>`
+    }
+
+    async function SairDaCampanha(id_mesa) {
+        let modal = document.getElementById("modal")
+        id_usuario = sessionStorage.ID_USUARIO
+        console.log(id_mesa)
+        console.log(id_usuario)
+        let resposta = await fetch("/campanhasRouter/sairCampanha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mesaServer: id_mesa,
+                idUsuarioServer: id_usuario
+            })
+        });
+
+        if (resposta.ok) {
+            let dados = await resposta.json();
+            if (dados.length == 0) {
+                alert("Campanha ou Usuário não encontrado!");
+                return;
+            }
+            alert("Você saiu da campanha!")
+            modal.style.display = "none";
+            window.location.reload()
+        } else {
+            alert("Erro ao sair da campanha!");
+            modal.style.display = "none"
         }
     }
 

@@ -11,9 +11,6 @@
 
     <link rel="stylesheet" href="../css/rpgreimagine/loginafter.css">
     <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css">
-
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Mais fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,9 +64,9 @@
 
             <div class="horizontal centralizar_linha">
                 <label class="fakeButton" onclick="salvarNome()" id="btnSaveName" style="display:none;">
-                    <img src="./assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
-                        onmouseover="this.src='./assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
-                        onmouseout="this.src='./assets/imgs_rpgreimagine/edit_text_No_Mouse.png'" alt="salvar nome">
+                    <img src="../assets/imgs_rpgreimagine/edit_text_No_Mouse.png"
+                        onmouseover="this.src='../assets/imgs_rpgreimagine/edit_text_OnMouse.png'"
+                        onmouseout="this.src='../assets/imgs_rpgreimagine/edit_text_No_Mouse.png'" alt="salvar nome">
                 </label>
             </div>
 
@@ -88,11 +85,9 @@
             </div>
             <p style="display:none;" id="alerta_erro"></p>
 
-        </div>
-
-        <div>
             <p>Código: <span id="codigoAtual">------</span></p>
             <button class="Btn_unico" onclick="GerarCodigo()">Gerar Código</button>
+
         </div>
         <button class="Btn_unico" onclick="criarMesa()">
             + Criar Mundo
@@ -119,8 +114,11 @@
 
 
 </body>
+<script src="../scripts/RemoverItens.js"></script>
+</script>
 
 <script>
+    RemoverItens()
     function Voltar() {
         window.location.href = "./ver_mundos.html"
     }
@@ -183,6 +181,7 @@
 
         let nome = document.getElementById("tituloMesa")
         nome = nome.textContent
+        let imagem = null
         let idUsuario = sessionStorage.ID_USUARIO
         let codigo = sessionStorage.GUARDAR_CODIGO
 
@@ -206,7 +205,7 @@
         })
 
         if (resposta.ok) {
-            window.location.href = "ver_mundos.html"
+            window.location.href = "RegrasRpg.html"
         } else {
             alert("Erro ao criar mesa")
         }
