@@ -293,7 +293,7 @@ main {
 
 #inputNomeMesa:focus {
     box-shadow: 0 0 0 0;
-    border: 0 none;
+    border: 0 transparent;
     outline: 0;
 }
 
@@ -448,6 +448,7 @@ main {
 }
 
 .modal {
+    color: whitesmoke;
     position: fixed;
     top: 0;
     right: 0;
@@ -493,4 +494,53 @@ main {
     color: #f5f5f5;
     width: 60%;
     height: 2rem;
+}
+
+.data {
+    color: lightgray;
+    font-size: medium;
+    font-weight: lighter;
+}
+
+.AlterarRegrasPag li {
+    list-style: none;
+}
+
+.AlterarRegrasPag li a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.AlterarRegrasPag li a:hover {
+    color: #e5571d;
+    text-decoration: none;
+}
+
+.Usuario .UserImage {
+    width: 100px;
+    border: whitesmoke 1px solid;
+    border-radius: 1rem;
+}
+
+.UserImage img {
+    border-radius: 1rem;
+}
+
+.horizontalEspaco {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.gaps {
+    gap: 10px;
+}
+
+.Usuario {
+    margin: 1rem;
+    display: flex;
+    flex: 1;
+    padding: 1rem;
+    border: whitesmoke 1px solid;
+    border-radius: 1rem;
 }
