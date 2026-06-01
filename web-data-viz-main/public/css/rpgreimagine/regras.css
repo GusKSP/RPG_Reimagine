@@ -1,0 +1,302 @@
+.ImagemMundo {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    border: solid whitesmoke 1px;
+    border-radius: 1em;
+}
+
+.ImagemMundo img {
+    padding: 0.3em;
+    border-radius: 1em;
+}
+
+.InfoMundo {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 1rem;
+    padding: 0.5rem;
+    border-left: 2px dashed whitesmoke;
+}
+
+.Info_Personagem {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    min-width: fit-content;
+    flex-wrap: wrap;
+    margin: 1rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 8px #e5571d;
+    border: 1px solid #e5571d;
+    background-color: #111111;
+}
+
+.ImagemPersonagem {
+    display: flex;
+    width: 75px;
+    height: 75px;
+    padding: 0.5rem;
+    border: 1px solid whitesmoke;
+    border-radius: 1em;
+
+}
+
+.ImagemPersonagem img {
+    border-radius: 1em;
+}
+
+.horizontalEntre {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbarPersonagem,
+.navbarPersonagem a {
+    width: fit-content;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    color: ghostwhite;
+}
+
+.navbarPersonagem li:hover {
+    a {
+        color: #e5571d;
+        cursor: pointer;
+    }
+}
+
+.direita {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.atributos {
+    display: flex;
+    width: 25%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    /*Fazendo Largura Fixa para Todos Os Campos https://pt.stackoverflow.com/questions/252254/como-colocar-colunas-de-uma-tabela-todas-com-o-mesmo-tamanho */
+    table-layout: fixed;
+}
+
+tr {
+    width: 100%;
+}
+
+tr th {
+    border: 1px solid whitesmoke;
+}
+
+tr td {
+    width: fit-content;
+    text-align: center;
+    border: 1px solid #363737;
+}
+
+.pericias {
+    display: flex;
+    flex: 0.75
+}
+
+td input {
+    margin: 0.3rem;
+    border: 1px solid #9d4edd;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    color: whitesmoke;
+    text-align: center;
+    width: 3rem;
+    height: 3rem;
+}
+
+.basics {
+    padding: 1rem;
+    gap: 0.5rem;
+}
+
+.AtributosEPericias {
+    gap: 0.5rem;
+}
+
+
+.addElement {
+    margin: 2rem;
+    background-image: linear-gradient(to left, #7b2cbf 70%, #9d4edd);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: transparent;
+    border-radius: 9999px;
+    /* Removendo Seta do Select: https://pt.stackoverflow.com/questions/134319/remover-seta-do-select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    transition: 0.3s;
+}
+
+.addElement option {
+    color: black;
+    font-weight: 700;
+    text-align: center;
+    background-color: rgba(#FFF, #FFF, #FFF, 0.5);
+}
+
+.addElement:hover {
+    cursor: pointer;
+    padding: 0.6rem 1.1rem;
+    background: linear-gradient(to left, #7b2cbf 70%, #9d4edd);
+    font-weight: 700;
+}
+
+/* Redimensionamento do TextArea: https://pt.stackoverflow.com/questions/12038/como-fazer-com-que-o-textarea-aumente-de-altura-automaticamente-at%C3%A9-um-certo-lim */
+.Descricao {
+    resize: none;
+    width: 80%;
+    height: 4rem;
+    overflow-y: auto;
+    border: #e5571d 1px solid;
+    box-shadow: 0px 0px 8px #e5571d;
+    background-color: #111111;
+    color: whitesmoke;
+
+}
+
+.barra {
+    position: relative;
+    display: flex;
+    min-width: fit-content;
+    width: 25%;
+    border: #363737;
+    border-radius: 0.5rem;
+    background: linear-gradient(to left, #111 70%, #222222)
+}
+
+.barraInfo input {
+    border: transparent;
+    background-color: transparent;
+    color: whitesmoke;
+    text-align: center;
+    width: 2rem;
+    height: 2rem;
+}
+
+.barraInfo {
+    position: absolute;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.barraPreenchida {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    height: 2rem;
+    background: linear-gradient(to left, #7b2cbf 70%, #9d4edd);
+    border-radius: 0.5rem;
+    transition: 0.3s;
+}
+
+.Photo {
+    width: 80px;
+    border: whitesmoke 2px solid;
+    border-radius: 0.3rem;
+}
+
+.ElementosGaps {
+    gap: 10px;
+}
+
+.barraCriatura {
+    padding: 0% 1rem;
+    margin: 0% 0% 1rem;
+}
+
+.vertical {
+    height: 100%;
+}
+
+.centralizar_tudo {
+    align-items: center;
+    justify-content: center;
+}
+
+.Dice {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    border: #111111 2px solid;
+    background-color: #222222;
+    color: whitesmoke;
+}
+
+.DiceValue {
+    width: 60px;
+    height: fit-content;
+    text-align: center;
+    border: #111111 2px solid;
+    background-color: #222222;
+    color: whitesmoke;
+}
+
+.Dice:hover {
+    cursor: pointer;
+    font-weight: bold;
+    border: #222222 2px solid;
+    background-color: #333333;
+}
+
+.Elemento {
+    padding: 1rem;
+}
+
+.TituloElemento {
+    color: whitesmoke;
+    width: fit-content;
+    font-size: 1.17em;
+    field-sizing: content;
+    background-color: transparent;
+    border: transparent;
+    box-shadow: none;
+    font-weight: bold;
+}
+
+.TituloAtP {
+    color: darkgray;
+    width: fit-content;
+    font-size: 1em;
+    field-sizing: content;
+    background-color: transparent;
+    border: transparent;
+    box-shadow: none;
+    font-weight: lighter
+}
+
+.SelectAtributo {
+    background-color: #222222;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: transparent;
+    border-radius: 0.5rem;
+
+}
+
+.Btn_unico {
+    margin: 0%;
+}
+
+.Btn_unico:hover {
+    margin: 0.1rem
+}

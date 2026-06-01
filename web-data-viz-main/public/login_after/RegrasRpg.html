@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegrasRpg</title>
+    <link rel="stylesheet" href="../css/rpgreimagine/loginafter.css">
+    <link rel="stylesheet" href="../css/rpgreimagine/regras.css">
+    <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css"> <!-- Mais fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="SincronizarElementos()">
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="esquerda">
+                    <div class="logo" onclick="window.location.href='../index.html'"></div>
+                </div>
+                <ul class="navbar" id="navbar">
+                    <li> <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a> </li>
+                    <li> <a href="../login_after/ver_mundos.html">Ver Mundos</a> </li>
+                    <li> <a href="../login_after/ver_personagens.html">Ver Personagens</a> </li>
+                    <li> <a href="../login_after/ver_campanhas.html">Ver Campanhas</a> </li>
+                    <li> <a href="../login_after/ver_perfil.html">Ver Perfil</a> </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="horizontal" style="justify-content: space-between; padding: 1rem; align-items: center;">
+            <img src="../assets/imgs_rpgreimagine/back_pixelArt.png" alt="Voltar" id="Return"
+                onclick="window.location.href='mudar_mesa.html'"
+                onmouseover="this.src='../assets/imgs_rpgreimagine/back_pixelArt_OnMouse_Over.png'"
+                onmouseout="this.src='../assets/imgs_rpgreimagine/back_pixelArt.png'" width="50px"
+                style="cursor:pointer">
+        </div>
+        <div class="horizontal" style="justify-content: space-between;">
+            <div class="InfoMundo" id="InfoMundo">
+                <div class="ImagemMundo" id="Imagem"> <img src="../assets/imgs_rpgreimagine/World_IMG_example.png"
+                        alt="ImagemDoMundo"> </div>
+                <div class="DescricaoMundo" id="DescricaoMundo">
+                    <h1 class="Mundo" id="Nome">Nome Do Mundo</h1>
+                    <p class="Codigo" id="Codigo">Código:</p>
+                    <p class="Data" id="Data">Data: xx/xx/xxxx</p>
+                </div>
+            </div>
+            <div class="Info_Personagem">
+                <div class="horizontalEntre">
+                    <div class="ImagemPersonagem" id="Imagem_Persoanagem"> <img
+                            src="../assets/imgs_rpgreimagine/User_IMG_Exemple.png" alt=""> </div>
+                    <div class="horizontal" style="gap: 0.5rem;">
+                        <h1 class="Title" id="Info_Personagem"></h1>
+                        <div class="vertical">
+                            <h2>Nome do Personagem</h2>
+                        </div>
+                    </div>
+                    <div id="direita">
+                        <div class="horizontal">
+                            <ul class="navbarPersonagem" id="personagem_nav">
+                                <li> <a>Perfil</a> </li>
+                                <li> <a>Itens</a> </li>
+                                <li> <a>Habilidades</a> </li>
+                                <li> <a>Criaturas</a> </li>
+                                <li> <a>Homebrews</a> </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Elements">
+            <div class="vertical basics Elemento">
+                <div class="horizontalEntre AtributosEPericias" id="InfosBasics">
+                    <div class="vertical atributos" id="Atributos">
+                        <h2>Atributos</h2>
+                        <table class="TabelaAtributos" id="TabelaAtributos">
+                            <tr>
+                                <th>Atributo</th>
+                                <th>Valor</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="vertical pericias" id="Pericias">
+                        <h3>Perícias</h3>
+                        <table class="TabelaPericias" id="TabelaPericias">
+                            <tr>
+                                <th> Atributo </th>
+                                <th> Perícia </th>
+                                <th> Valor </th>
+                                <th> Incremento </th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="Barras" class="vertical ElementosGaps">
+                    <h2>Estatísticas</h2>
+                </div>
+            </div>
+            <hr>
+            <div class="habilidades Elemento" id="Habilidades">
+                <h2>Habilidades</h2>
+            </div> <br>
+            <hr>
+            <div class="ElementosGaps vertical Elemento" id="Itens">
+                <h2>Itens</h2>
+            </div> <br>
+            <hr>
+            <div class="ElementosGaps vertical Elemento" id="Criaturas">
+                <h2>Criaturas</h2>
+            </div> <br>
+            <hr>
+            <div class="homebrews Elemento" id="Homebrews">
+                <h2>Homebrews</h2>
+            </div>
+        </div>
+        <div id="add_element"> <select class="addElement" id="AddElement" onchange="AdicionarElemento()">
+                <option value="0"> + Adicionar Elemento </option>
+                <option value="1"> Atributo </option>
+                <option value="2"> Perícia </option>
+                <option value="3"> Barra </option>
+                <option value="4"> Habilidade </option>
+                <option value="5"> Item </option>
+                <option value="6"> Criatura </option>
+                <option value="7"> Homebrew </option>
+            </select> </div>
+        <div class="modal" id="modal" style="display: none;">
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="esquerda">
+                <div class="horizontal"> <img src="../assets/imgs_rpgreimagine/DICE_RPGREIMAGINE_PixelArt.png"
+                        alt="logo_rpg_reimagine">
+                    <h4>Tem alguma Reclamação ou Dúvida?</h4>
+                </div>
+                <p>Email para contato: <a href="mailto:gus.paulino@sptech.school">gus.paulino@sptech.school</a></p>
+            </div>
+            <div class="meio"> </div>
+            <div class="direita"> </div>
+        </div>
+    </footer>
+</body>
+<script src="../scripts/RemoverItens.js"></script>
+<script src="../scripts/navbar.js"></script>
+
+<script>
+
+    async function SincronizarElementos() {
+
+        let idMesa = sessionStorage.ID_MUNDO;
+
+        let resposta = await fetch("/ElementosRouter/TrazerElementos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idMesaServer: idMesa })
+        });
+
+        let dados = await resposta.json();
+
+        document.getElementById("TabelaAtributos").innerHTML =
+            `<tr><th>Atributo</th><th>Valor</th><th></th></tr>`;
+
+        document.getElementById("TabelaPericias").innerHTML =
+            `<tr><th>Atributo</th><th>Perícia</th><th>Valor</th><th>Incremento</th><th></th></tr>`;
+
+        Barras.innerHTML = `<h2>Estatísticas</h2>`;
+        Habilidades.innerHTML = `<h2>Habilidades</h2>`;
+        Itens.innerHTML = `<h2>Itens</h2>`;
+        Criaturas.innerHTML = `<h2>Criaturas</h2>`;
+        Homebrews.innerHTML = `<h2>Homebrews</h2>`;
+
+        let atributos = [];
+        let criaturas = {};
+
+        for (let i = 0; i < dados.length; i++) {
+            if (dados[i].tipo_elemento == 1) atributos.push(dados[i]);
+        }
+
+        for (let i = 0; i < dados.length; i++) {
+            if (dados[i].tipo_elemento == 6) {
+                criaturas[dados[i].id_elementos_mesa] = { criatura: dados[i], barras: [] };
+            }
+        }
+
+        for (let i = 0; i < dados.length; i++) {
+            if (dados[i].tipo_elemento == 3 && dados[i].fk_elemento_dependencia) {
+                if (criaturas[dados[i].fk_elemento_dependencia]) {
+                    criaturas[dados[i].fk_elemento_dependencia].barras.push(dados[i]);
+                }
+            }
+        }
+
+        for (let i = 0; i < dados.length; i++) {
+
+            let elemento = dados[i];
+
+            if (elemento.descricao == null || elemento.descricao == undefined) {
+                elemento.descricao = "";
+            }
+
+            // ATRIBUTOS
+            if (elemento.tipo_elemento == 1) {
+                document.getElementById("TabelaAtributos").innerHTML +=
+                    `<tr>
+<td><input type="text" value="${elemento.nome}" placeholder="Nome" class="TituloAtP"
+onupdate="VerificarValor(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="nome_${elemento.id_elementos_mesa}"></td>
+
+<td><input type="text" value="${elemento.valor_inteiro}" placeholder="Valor" class="TituloAtP"
+onupdate="VerificarValorNumerico(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="valor_${elemento.id_elementos_mesa}"></td>
+
+<td><button class="Btn_unico" onclick="ExcluirElemento(${elemento.id_elementos_mesa})">Excluir</button></td>
+</tr>`;
+            }
+
+            // PERÍCIAS
+            else if (elemento.tipo_elemento == 2) {
+
+                let options = "";
+                for (let j = 0; j < atributos.length; j++) {
+
+                    let selected = "";
+                    if (atributos[j].id_elementos_mesa == elemento.fk_elemento_dependencia) selected = "selected";
+
+                    options += `<option value="${atributos[j].id_elementos_mesa}" ${selected}>${atributos[j].nome}</option>`;
+                }
+
+                document.getElementById("TabelaPericias").innerHTML +=
+                    `<tr>
+<td>
+<select class="SelectAtributo"
+onchange="AlterarAtributoPericia(${elemento.id_elementos_mesa}, this.value)"
+id="elemento_dep_${elemento.id_elementos_mesa}">
+${options}
+</select>
+</td>
+
+<td>
+<input type="text" value="${elemento.nome}" placeholder="Perícia" class="TituloAtP"
+onupdate="VerificarValor(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="nome_${elemento.id_elementos_mesa}">
+</td>
+
+<td>
+<input type="text" value="${elemento.valor_inteiro}"
+onupdate="VerificarValorNumerico(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="valor_${elemento.id_elementos_mesa}">
+</td>
+
+<td><input type="text" value=""></td>
+
+<td><button class="Btn_unico" onclick="ExcluirElemento(${elemento.id_elementos_mesa})">Excluir</button></td>
+</tr>`;
+            }
+
+            // BARRAS
+            else if (elemento.tipo_elemento == 3 && !elemento.fk_elemento_dependencia) {
+
+                let Atual = elemento.valor_inteiro;
+                let Maximo = elemento.valor_inteiro;
+                let Porcentagem = Maximo > 0 ? (Atual * 100) / Maximo : 0;
+
+                Barras.innerHTML +=
+                    `<div class="vertical ElementosGaps">
+<input type="text" value="${elemento.nome}" class="TituloElemento"
+onupdate="VerificarValor(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="nome_${elemento.id_elementos_mesa}">
+
+<div class="barra ElementosGaps" id="barra_${elemento.id_elementos_mesa}">
+<div class="barraPreenchida" style="width:${Porcentagem}%" id="preenchida_${elemento.id_elementos_mesa}"></div>
+<div class="barraInfo">
+
+<input type="text" value="${Atual}"
+onupdate="VerificarValorNumericoAtual(${elemento.id_elementos_mesa})"
+id="valoratual_${elemento.id_elementos_mesa}">
+
+<span>/</span>
+
+<input type="text" value="${Maximo}"
+oninput="VerificarValorNumerico(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="valor_${elemento.id_elementos_mesa}">
+
+</div>
+</div>
+
+<button onclick="ExcluirElemento(${elemento.id_elementos_mesa})" class="Btn_unico">Excluir</button>
+</div>`;
+            }
+
+            // HABILIDADES
+            else if (elemento.tipo_elemento == 4) {
+
+                Habilidades.innerHTML +=
+                    `<div class="vertical">
+<div class="horizontalEntre">
+
+<div class="vertical" style="width:100%;">
+<input type="text" value="${elemento.nome}" class="TituloElemento"
+placeholder="Nome da habilidade"
+onupdate="VerificarValor(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="nome_${elemento.id_elementos_mesa}">
+
+<textarea class="Descricao"
+placeholder="Descrição da habilidade"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="descricao_${elemento.id_elementos_mesa}">${elemento.descricao}</textarea>
+</div>
+
+<div class="vertical centralizar_tudo ElementosGaps">
+<input type="text" value="${elemento.valor_inteiro}" class="DiceValue"
+onupdate="VerificarValorNumerico(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="valor_${elemento.id_elementos_mesa}">
+
+<button class="Dice">D${elemento.valor_inteiro}</button>
+</div>
+
+</div>
+<button onclick="ExcluirElemento(${elemento.id_elementos_mesa})" class="Btn_unico">Excluir</button>
+
+</div>`;
+            }
+
+            // ITENS
+            else if (elemento.tipo_elemento == 5) {
+
+                Itens.innerHTML +=
+                    `<div class="horizontalEntre">
+
+<div class="horizontal ElementosGaps" style="width:100%;">
+
+<div class="vertical centralizar_tudo">
+<img src="../assets/imgs_rpgreimagine/Item_IMG_Exemple.png" class="Photo">
+</div>
+
+<div class="horizontal" style="flex:1;">
+
+<div class="vertical ElementosGaps" style="flex:1;">
+
+<input type="text" value="${elemento.nome}" class="TituloElemento"
+placeholder="Nome do item"
+onupdate="VerificarValor(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="nome_${elemento.id_elementos_mesa}">
+
+<textarea class="Descricao" placeholder="Descrição do item" onblur="AtualizarElemento(${elemento.id_elementos_mesa})" id="descricao_${elemento.id_elementos_mesa}">${elemento.descricao}</textarea>
+
+</div>
+
+<div class="vertical ElementosGaps centralizar_tudo" style="flex:0.25;">
+
+<input type="text" value="${elemento.valor_inteiro}" class="DiceValue"
+onupdate="VerificarValorNumerico(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="valor_${elemento.id_elementos_mesa}">
+
+<button class="Dice">D${elemento.valor_inteiro}</button>
+
+</div>
+
+</div>
+
+</div>
+
+<button onclick="ExcluirElemento(${elemento.id_elementos_mesa})" class="Btn_unico">Excluir</button>
+
+</div>`;
+            }
+
+            // CRIATURAS
+            else if (elemento.tipo_elemento == 6) {
+
+                let grupo = criaturas[elemento.id_elementos_mesa];
+                let barrasHTML = "";
+
+                if (grupo && grupo.barras.length > 0) {
+
+                    for (let k = 0; k < grupo.barras.length; k++) {
+
+                        let b = grupo.barras[k];
+
+                        let atual = b.valor_inteiro;
+                        let max = b.valor_inteiro;
+                        let pct = max > 0 ? (atual * 100) / max : 0;
+
+                        barrasHTML +=
+                            `<div class="barraCriatura">
+<div class="barra" id="barra_${b.id_elementos_mesa}">
+<div class="barraPreenchida" style="width:${pct}%" id=preenchida_${b.id_elementos_mesa}></div>
+<div class="barraInfo" id="">
+
+<input type="text" value="${atual}"
+onupdate="VerificarValorNumericoAtual(${b.id_elementos_mesa})"
+id="valoratual_${b.id_elementos_mesa}">
+
+<span>/</span>
+
+<input type="text" value="${max}"
+onupdate="VerificarValorNumerico(${b.id_elementos_mesa})"
+onblur="AtualizarElemento(${b.id_elementos_mesa})"
+id="valor_${b.id_elementos_mesa}">
+
+</div>
+</div>
+
+<button onclick="ExcluirElemento(${b.id_elementos_mesa})" class="Btn_unico">Excluir</button>
+
+</div>`;
+                    }
+                }
+
+                Criaturas.innerHTML +=
+                    `<div class="vertical ElementosGaps">
+
+<div class="horizontal ElementosGaps">
+
+<div class="vertical centralizar_tudo">
+<img src="../assets/imgs_rpgreimagine/Creature_IMG_Exemple.png" class="Photo">
+</div>
+
+<div class="horizontal" style="flex:1;">
+
+<div class="vertical ElementosGaps" style="flex:1;">
+
+<input type="text" value="${elemento.nome}" class="TituloElemento"
+placeholder="Nome da criatura"
+onupdate="VerificarValor(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="nome_${elemento.id_elementos_mesa}">
+
+<textarea class="Descricao"
+placeholder="Descrição da criatura"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="descricao_${elemento.id_elementos_mesa}">${elemento.descricao}</textarea>
+
+</div>
+
+</div>
+
+</div>
+
+${barrasHTML}
+
+<button onclick="AdicionarElementoDependente(${elemento.id_elementos_mesa})" class="Btn_unico">Adicionar Barra</button>
+
+<button onclick="ExcluirElemento(${elemento.id_elementos_mesa})" class="Btn_unico">Excluir Criatura</button>
+
+</div>`;
+            }
+
+            // HOMEBREWS
+            else if (elemento.tipo_elemento == 7) {
+
+                Homebrews.innerHTML +=
+                    `<div class="vertical ElementosGaps">
+
+<input type="text" value="${elemento.nome}" class="TituloElemento"
+placeholder="Nome do homebrew"
+onupdate="VerificarValor(${elemento.id_elementos_mesa})"
+onblur="AtualizarElemento(${elemento.id_elementos_mesa})"
+id="nome_${elemento.id_elementos_mesa}">
+
+<textarea class="Descricao" placeholder="Descrição do homebrew" onblur="AtualizarElemento(${elemento.id_elementos_mesa})" id="descricao_${elemento.id_elementos_mesa}">${elemento.descricao}</textarea>
+
+<button onclick="ExcluirElemento(${elemento.id_elementos_mesa})" class="Btn_unico">Excluir</button>
+
+</div>`;
+            }
+        }
+    }
+
+    async function AdicionarElemento() {
+
+        let select = document.getElementById("AddElement");
+        let tipoElemento = select.value;
+
+        if (tipoElemento == "0") return;
+
+        let idMesa = sessionStorage.ID_MUNDO;
+
+        let resposta = await fetch("/ElementosRouter/AdicionarElemento", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idMesaServer: idMesa,
+                tipoElementoServer: tipoElemento
+            })
+        });
+
+        select.value = "0";
+
+        if (resposta.ok) {
+            await SincronizarElementos();
+        } else {
+            console.log("Erro ao adicionar elemento");
+        }
+    }
+
+    async function AdicionarElementoDependente(idElemento) {
+
+        if (!idElemento) return;
+
+        let idMesa = sessionStorage.ID_MUNDO;
+
+        let resposta = await fetch("/ElementosRouter/AdicionarElementoDependente", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idMesaServer: idMesa,
+                idElementoServer: idElemento
+            })
+        });
+
+        if (resposta.ok) {
+            await SincronizarElementos();
+        } else {
+            console.log("Erro ao adicionar elemento dependente");
+        }
+    }
+
+
+
+    function ExcluirElemento(idElemento) {
+        if (!idElemento) {
+            return;
+        }
+        let modal = document.getElementById("modal")
+        modal.style.display = "flex";
+        modal.innerHTML = `
+    <div class="modal_content">
+        <h1>Confirmar Exclusão</h1>
+
+        <div class="formulario">
+            <h3>Tem certeza que deseja excluir este elemento?</h3>
+
+            <div class="horizontal ElementosGaps">
+                <button class="Btn_unico" onclick="FecharModal()">Cancelar</button>
+                <button class="Btn_unico" onclick="Confirmar(${idElemento})">Confirmar</button>
+            </div>
+        </div>
+    </div>
+    `;
+
+    }
+
+    function FecharModal() {
+        modal.style.display = "none";
+        modal.innerHTML = "";
+    }
+
+    async function Confirmar(idElemento) {
+
+        let resposta = await fetch("/ElementosRouter/ExcluirElemento", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idElementoServer: idElemento
+            })
+        });
+
+        FecharModal();
+
+        if (resposta.ok) {
+            await SincronizarElementos();
+        } else {
+            console.log("Erro ao excluir elemento");
+        }
+    }
+
+    function VerificarValor(id) {
+        let input = document.getElementById("nome_" + id);
+
+        if (input.value == "") {
+            input.value = input.dataset.valorAnterior;
+        } else {
+            input.dataset.valorAnterior = input.value;
+        }
+    }
+
+    function VerificarValorNumerico(id) {
+        let input = document.getElementById("valor_" + id);
+
+        let valor = input.value;
+
+        if (valor == "") {
+            input.value = "0";
+            return;
+        }
+
+        let numeros = "1234567890";
+        let novoValor = "";
+
+        for (let i = 0; i < valor.length; i++) {
+            let caractere = valor[i];
+            let valido = false;
+
+            for (let j = 0; j < numeros.length; j++) {
+                if (caractere == numeros[j]) {
+                    valido = true;
+                    break;
+                }
+            }
+
+            if (valido) {
+                novoValor += caractere;
+            }
+        }
+
+        input.value = novoValor;
+        atualizarPorcentagem(id)
+    }
+
+    function VerificarValorNumericoAtual(id) {
+
+        let input = document.getElementById("valoratual_" + id);
+
+        let valor = input.value;
+
+        if (valor == "") {
+            input.value = "0";
+            return;
+        }
+
+        let numeros = "1234567890";
+        let novoValor = "";
+
+        for (let i = 0; i < valor.length; i++) {
+            let caractere = valor[i];
+            let valido = false;
+
+            for (let j = 0; j < numeros.length; j++) {
+                if (caractere == numeros[j]) {
+                    valido = true;
+                    break;
+                }
+            }
+
+            if (valido) {
+                novoValor += caractere;
+            }
+        }
+
+        input.value = novoValor;
+
+        atualizarPorcentagem(id)
+    }
+
+    function atualizarPorcentagem(id) {
+
+        let barra = document.getElementById("barra_" + id);
+
+        let atualInput = document.getElementById("valoratual_" + id);
+        let maxInput = document.getElementById("valor_" + id);
+        let preenchida = document.getElementById("preenchida_" + id);
+
+        if (!atualInput || !maxInput || !preenchida) {
+            return;
+        }
+
+        let atual = atualInput.value;
+        let max = maxInput.value;
+
+        if (atual == "") {
+            atual = "0";
+            atualInput.value = "0";
+        }
+
+        if (max == "" || max == "0") {
+            max = "0";
+            maxInput.value = "0";
+        }
+
+        let porcentagem = 0;
+
+        if (parseInt(max) > 0) {
+            porcentagem = (parseInt(atual) * 100) / parseInt(max);
+        }
+
+        preenchida.style.width = porcentagem + "%";
+    }
+    async function AtualizarElemento(id) {
+
+        var nome = document.getElementById("nome_" + id);
+        var valor = document.getElementById("valor_" + id);
+        var descricao = document.getElementById("descricao_" + id);
+        var dependente = document.getElementById("elemento_dep_" + id);
+
+        var nomeValor = "";
+        var valorValor = 0;
+        var descricaoValor = "";
+        var fkDependencia = null;
+
+        if (nome != null) {
+            nomeValor = nome.value;
+        }
+
+        if (valor != null) {
+            valorValor = valor.value;
+        }
+
+        if (descricao != null) {
+            descricaoValor = descricao.value;
+        }
+
+        if (dependente != null) {
+            fkDependencia = dependente.value;
+        }
+
+        let resposta = await fetch("/ElementosRouter/AtualizarElemento", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idElementoServer: id,
+                nomeServer: nomeValor,
+                valorInteiroServer: valorValor,
+                descricaoServer: descricaoValor,
+                fkDependenciaServer: fkDependencia
+            })
+        });
+    }
+</script>
+
+</html>
