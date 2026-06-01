@@ -23,4 +23,12 @@ router.post("/salvarCodigoRoute", function (req, res) {
     MundosController.SalvarCodigoController(req, res)
 })
 
+router.post("/trazerInfos", function (req, res) {
+    MundosController.trazerInformacoesMundo(req, res)
+})
+
+router.post("/salvarAlteracoes", function (req, res) {
+    MundosController.SalvarAlteracoesController(req, res)
+})
+
 module.exports = router;

@@ -83,11 +83,51 @@ function SalvarCodigoController(req, res) {
         })
 }
 
+function trazerInformacoesMundo(req, res) {
+    var id_mundo = req.body.idServerMundo
+
+    if (!id_mundo) {
+        res.status(400).send("Erro ao tentar buscar o Mundo")
+        return
+    } else {
+        MundosModel.trazerMesa(id_mundo)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(function (erro) {
+                console.log("ERRO COMPLETO:", erro);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+function SalvarAlteracoesController(req, res) {
+    var id_mundo = req.body.idServerMundo
+    var nome_mundo = req.body.nomeServer
+    var imagem = req.body.imagemServer
+    var codigo = req.body.codigoServer
+    if (!id_mundo || !nome_mundo) {
+        res.status(400).send("Erro ao tentar salvar o Mundo")
+        return
+    }
+    else {
+        MundosModel.SalvarMundo(id_mundo, nome_mundo, imagem, codigo)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(function (erro) {
+                console.log("ERRO COMPLETO:", erro);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
 module.exports = {
     BuscarMundosController,
     excluirMesaController,
     criarMesaController,
     VerificarCodigoController,
-    SalvarCodigoController
-
+    SalvarCodigoController,
+    trazerInformacoesMundo,
+    SalvarAlteracoesController,
 }   

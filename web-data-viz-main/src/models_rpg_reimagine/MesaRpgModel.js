@@ -7,16 +7,22 @@ function carregarMesas(id_usuario) {
     return database.executar(instrucaoSelectMesa, [id_usuario])
 }
 
+function trazerMesa(id_mesa) {
+    var instrucaoSelectMesa = `SELECT * FROM Mesas WHERE id_mesa = ?`
+    console.log("Executando a instrução SQL: \n" + instrucaoSelectMesa);
+    return database.executar(instrucaoSelectMesa, [id_mesa])
+}
+
 function criarCodigo(codigo, id_mesa) {
     var instrucaoUpdateMesa = `UPDATE Mesas SET codigo = ? WHERE id_mesa = ?`
     console.log("Executando a instrução SQL: \n" + instrucaoUpdateMesa);
     return database.executar(instrucaoUpdateMesa, [codigo, id_mesa])
 }
 
-function alterarFotoMesa(imagem_mesa, id_mesa) {
-    var instrucaoUpdateMesa = `UPDATE Mesas SET imagem_mesa = ? WHERE id_mesa = ?`
+function SalvarMundo(id_mundo, nome_mundo, imagem, codigo) {
+    var instrucaoUpdateMesa = `UPDATE Mesas SET nome_mesa = ?, imagem_mesa = ?, codigo = ? WHERE id_mesa = ?;`
     console.log("Executando a instrução SQL: \n" + instrucaoUpdateMesa);
-    return database.executar(instrucaoUpdateMesa, [imagem_mesa, id_mesa])
+    return database.executar(instrucaoUpdateMesa, [nome_mundo, imagem, codigo, id_mundo])
 }
 
 function criarMesa(id_usuario, nome_mesa, codigo) {
@@ -62,8 +68,9 @@ function VerificarCodigoModel(codigo) {
 module.exports = {
     carregarMesas,
     criarCodigo,
-    alterarFotoMesa,
     criarMesa,
     excluirMesa,
-    VerificarCodigoModel
+    VerificarCodigoModel,
+    trazerMesa,
+    SalvarMundo,
 };

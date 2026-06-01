@@ -19,6 +19,7 @@ var personagemRouter = require("./src/routes_rpgreimagine/PersonagensRpg");
 var mundosRouter = require("./src/routes_rpgreimagine/MundosRpg");
 var campanhasRouter = require("./src/routes_rpgreimagine/CampanhasRpg");
 var dashRouter = require("./src/routes_rpgreimagine/DashboardRpg");
+var elementosRouter = require("./src/routes_rpgreimagine/ElementosRpg");
 
 var app = express();
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use("/DashboardRpg", dashRouter);
 app.use("/personagemRpg", personagemRouter);
 app.use("/mundosRouter", mundosRouter);
 app.use("/campanhasRouter", campanhasRouter);
+app.use("/elementosRouter", elementosRouter);
 
 
 
