@@ -1,34 +1,96 @@
-console.log("MODEL MESA RPG CARREGADO");
-var database = require("../database_rpgreimagine/configRpg")
+console.log("MODEL ELEMENTOS RPG CARREGADO");
 
-function carregarElementos(id_mesa) {
-    var instrucaoSelectElemento = ` SELECT * FROM ElementosMesa WHERE fk_mesa = ? `
+var database = require("../database_rpgreimagine/configRpg");
 
-    console.log("Executando a instrução SQL: \n" + instrucaoSelectElemento)
-    return database.executar(instrucaoSelectElemento, [id_mesa])
+function trazerElementosModel(idMesa) {
 
+    var instrucaoSql = `
+        SELECT
+            id_elementos_mesa, imagem_elemento, nome, descricao, valor_inteiro, valor_flutuante, tipo_elemento, fk_mesa, 
+            fk_elemento_dependencia
+        FROM ElementosMesa
+        WHERE fk_mesa = ?;
+    `;
+
+    console.log("Executando a instrução SQL:\n" + instrucaoSql);
+
+    return database.executar(instrucaoSql, [idMesa]);
 }
 
-function criarElementos(id_mesa, nome, tipo_elemento, id_elemento_dependencia) {
-    var instrucaoInsertElemento = `INSERT INTO ElementosMesa (fk_mesa, nome, tipo_elemento, fk_elemento_dependencia) VALUES (?, ?, ?, ?)`
-    console.log("Executando a instrução SQL: \n" + instrucaoInsertElemento)
-    return database.executar(instrucaoInsertElemento, [id_mesa, nome, tipo_elemento, id_elemento_dependencia])
-}
+function adicionarElementoModel(idMesa, tipoElemento) {
+    let nome = "Novo Elemento";
 
-function modificarCampo(id_elemento, id_mesa, campo, valor) {
-    const camposPermitidos = ["imagem_elemento", "nome", "descricao", "valor_inteiro", "valor_flutuante"]
-    if (camposPermitidos.includes(campo)) {
-        var instrucaoUpdateElemento = `UPDATE ElementosMesa SET ${campo} = ? WHERE id_elementos_mesa = ? AND fk_mesa = ?`
-        console.log("Executando a instrução SQL: \n" + instrucaoUpdateElemento)
-        return database.executar(instrucaoUpdateElemento, [valor, id_elemento, id_mesa])
+    if (tipoElemento == 1) {
+        nome = "Novo Atributo";
     }
-    else {
-        return "Campo Inválido!"
+    else if (tipoElemento == 2) {
+        nome = "Nova Perícia";
     }
+    else if (tipoElemento == 3) {
+        nome = "Nova Barra";
+    }
+    else if (tipoElemento == 4) {
+        nome = "Nova Habilidade";
+    }
+    else if (tipoElemento == 5) {
+        nome = "Novo Item";
+    }
+    else if (tipoElemento == 6) {
+        nome = "Nova Criatura";
+    }
+    else if (tipoElemento == 7) {
+        nome = "Novo Homebrew";
+    }
+
+    var instrucaoSql = `
+        INSERT INTO ElementosMesa (nome, valor_inteiro, tipo_elemento, fk_mesa) VALUES
+        (?,20,?,?);
+    `;
+
+    console.log("Executando a instrução SQL:\n" + instrucaoSql);
+
+    return database.executar(
+        instrucaoSql,
+        [nome, tipoElemento, idMesa]
+    );
 }
+
+function adicionarElementoDependenteModel(idMesa, idElemento) {
+
+    let nome = "Nova Barra";
+
+    let instrucaoSql = `INSERT INTO ElementosMesa (nome, valor_inteiro, valor_flutuante, tipo_elemento, fk_mesa, fk_elemento_dependencia) VALUES
+    (?, 0, 100, 3, ?, ?);
+`;
+
+    console.log("Executando SQL dependente:\n" + instrucaoSql);
+
+    return database.executar(instrucaoSql, [nome, idMesa, idElemento]);
+}
+
+
+function excluirElementoModel(idElemento) {
+    var instrucaoSql = ` DELETE FROM ElementosMesa WHERE id_elementos_mesa=?;`;
+    console.log("Executando SQL:\n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idElemento]);
+}
+
+function AtualizarElemento(idElemento, nome, valorInteiro, descricao, fkDependencia) {
+    if (fkDependencia == "" || fkDependencia == undefined) {
+        fkDependencia = null
+    }
+    var sql = `UPDATE ElementosMesa SET nome = '${nome}', valor_inteiro = ${valorInteiro}, descricao = '${descricao}', fk_elemento_dependencia = ${fkDependencia} WHERE id_elementos_mesa = ${idElemento}; `;
+
+    return database.executar(sql);
+}
+
+
+
 
 module.exports = {
-    carregarElementos,
-    criarElementos,
-    modificarCampo
+    trazerElementosModel,
+    adicionarElementoModel,
+    excluirElementoModel,
+    adicionarElementoDependenteModel,
+    AtualizarElemento,
 };

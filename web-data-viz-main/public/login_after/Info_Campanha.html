@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rpg_Reimagine | Ver_Infos</title>
+
+
+    <link rel="stylesheet" href="../css/rpgreimagine/loginafter.css">
+    <link rel="stylesheet" href="../css/rpgreimagine/footerAndHeader.css">
+
+    <!-- Mais fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="SicronizarUsuarios()">
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="esquerda">
+                    <div class="logo" onclick="window.location.href='../index.html'"></div>
+                </div>
+                <ul class="navbar" id="navbar">
+                    <li>
+                        <a href="../dashboard_rpgreimagine/dashboard.html">Ir para a Dash</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_mundos.html">Ver Mundos</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_personagens.html">Ver Personagens</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_campanhas.html">Ver Campanhas</a>
+                    </li>
+                    <li>
+                        <a href="../login_after/ver_perfil.html">Ver Perfil</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <div class="horizontal" style="justify-content: space-between; padding: 1rem; align-items: center;">
+            <img src="../assets/imgs_rpgreimagine/back_pixelArt.png" alt="Voltar" id="Return"
+                onclick="window.location.href='ver_campanhas.html'"
+                onmouseover="this.src='../assets/imgs_rpgreimagine/back_pixelArt_OnMouse_Over.png'"
+                onmouseout="this.src='../assets/imgs_rpgreimagine/back_pixelArt.png'" width="50px"
+                style="cursor:pointer">
+        </div>
+
+        <div id="usuariosRpg" class="vertical">
+        </div>
+    </main>
+    <div class="modal" id="modal" style="display: none;">
+        <div class="modal_content">
+            <h1>Remover Usuário</h1>
+            <div class="formulario">
+                <h3>Deseja mesmo Remover este usuário?</h3>
+                <div class="horizontal">
+                    <button class="Btn_unico" onclick="CancelarModal()">Cancelar</button>
+                    <button class="Btn_unico" onclick="ConfirmarRemocao()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <div class="esquerda">
+                <div class="horizontal">
+                    <img src="../assets/imgs_rpgreimagine/DICE_RPGREIMAGINE_PixelArt.png" alt="logo_rpg_reimagine">
+
+                    <h4>Tem alguma Reclamação ou Dúvida?</h4>
+                </div>
+                <p>Email para contato: <a href="mailto:gus.paulino@sptech.school">gus.paulino@sptech.school</a></p>
+            </div>
+            <div class="meio">
+            </div>
+            <div class="direita">
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
+<script src="../scripts/navbar.js"></script>
+<script src="../scripts/RemoverItens.js"></script>
+</script>
+<script>
+    async function SicronizarUsuarios() {
+
+        let idMesa = sessionStorage.ID_MESA;
+
+        let resposta = await fetch("/campanhasRouter/buscarUsuariosCampanha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idMesaServer: idMesa
+            })
+        });
+
+        if (!resposta.ok) {
+            console.log("Erro na requisição:", resposta.status);
+            return;
+        }
+
+        let dados = await resposta.json();
+
+        console.log("USUÁRIOS DA CAMPANHA:", dados);
+
+        let container = document.getElementById("usuariosRpg");
+
+        for (let i = 0; i < dados.length; i++) {
+
+            let usuario = dados[i];
+            console.log(usuario)
+            let data = (usuario.dt_entrada).split("T")
+            console.log(data)
+            data = data[0].split("-")
+            console.log(data)
+            data = `${data[2]}/${data[1]}/${data[0]}`
+            console.log(data)
+            console.log(usuario)
+            console.log(usuario.Id_Criador)
+            console.log(sessionStorage.ID_USUARIO)
+            if (usuario.Id_Criador == sessionStorage.ID_USUARIO) {
+
+                container.innerHTML += `
+                <div class="Usuario">
+                    <div class="horizontalEspaco">
+                        
+                        <div class="horizontal centralizar_tudo gaps">
+                            
+                            <div class="vertical centralizar_tudo UserImage">
+                                <img src="${'../assets/imgs_rpgreimagine/User_IMG_Exemple.png'}" alt="Usuario">
+                                </div>
+                                
+                                <div class="vertical centralizar_tudo">
+                                    <h3>${usuario.Nome_Usuario}</h3>
+                                    <p class="data">Data de Entrada: ${data}</p>
+                                    </div>
+                                    
+                                    </div>
+                                    
+                                    <div class="vertical">
+                                        <button class="Btn_unico"
+                                        onclick="AbrirModal(${usuario.Id_Usuario}, ${usuario.Id_Mesa})">
+                                        Remover Usuário
+                                        </button>
+                                        </div>
+                                        
+                                        </div>
+                                        </div>`;
+            }
+            else {
+                container.innerHTML += `
+                <div class="Usuario">
+                    <div class="horizontalEspaco">
+                        
+                        <div class="horizontal centralizar_tudo gaps">
+                            
+                            <div class="vertical centralizar_tudo UserImage">
+                                <img src="${'../assets/imgs_rpgreimagine/User_IMG_Exemple.png'}" alt="Usuario">
+                                </div>
+                                
+                            <div class="vertical centralizar_tudo">
+                                <h3>${usuario.Nome_Usuario}</h3>
+                                <p class="data">Data de Entrada: ${data}</p>
+                            </div>
+                                    
+                        </div>
+                    </div>
+                </div>`;
+            }
+        }
+    }
+    let idUsuarioSelecionado = null;
+    let idMesaSelecionada = null;
+
+    function AbrirModal(idUsuario, idMesa) {
+
+        idUsuarioSelecionado = idUsuario;
+        idMesaSelecionada = idMesa;
+
+        let modal = document.getElementById("modal");
+        modal.style.display = "flex";
+    }
+
+    function CancelarModal() {
+        let modal = document.getElementById("modal");
+        modal.style.display = "none";
+        window.location.reload()
+        idUsuarioSelecionado = null;
+        idMesaSelecionada = null;
+    }
+
+    async function ConfirmarRemocao() {
+
+        let resposta = await fetch("/campanhasRouter/sairCampanha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mesaServer: idMesaSelecionada,
+                idUsuarioServer: idUsuarioSelecionado
+            })
+        });
+
+        if (resposta.ok) {
+            CancelarModal();
+            SicronizarUsuarios();
+        } else {
+            console.log("Erro ao remover usuário");
+        }
+    }
+</script>
